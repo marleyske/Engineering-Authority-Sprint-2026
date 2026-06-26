@@ -212,6 +212,7 @@ git remote set-url origin [https://YOUR_TOKEN@github.com/marleyske/Engineering-A
 Reflection:
 
 Documenting the workflow now ensures that I don't lose time on configuration during future lab sessions. I will add this section whenever I encounter a new Git command or error.
+
 ### 1. The "Triage & Rescue" Lab (Simulation)
 
 This lab simulates the exact work of an autonomous vehicle support specialist: finding a specific error in a large file and documenting it.
@@ -220,6 +221,29 @@ This lab simulates the exact work of an autonomous vehicle support specialist: f
 - **The Task:** Use `cat` or `grep` to search through those files to find a specific string (e.g., "ERROR: Connection Lost").
 - **The Documentation:** Once you find the error, use `nano` or `vim` to create a new file named `incident_report.txt`. In that file, log the filename where the error was found, the time (you can make this up), and a brief description of how you found it.
 - **Why this works:** It forces you to use `grep`, file navigation, and documentation—the three pillars of the role you applied for.
+
+Answer:
+
+ERROR Files:
+
+system_3.log:2:ERROR: Critical failure in memory allocation
+system_5.log:2:ERROR: Connection timeout on port 8080
+system_5.log:3:ERROR: Database authentication failed
+
+Time: 7:20pm
+
+Description:
+
+I found these errors by running the grep -ni "error" system_* command and obtained the file errors and also the line number.
+
+## CLI Triage Patterns:
+
+### Pattern: Log Searching
+
+* Use grep -ni <pattern> <files> as the default search.
+* -n provides the location (line number) for fast navigation.
+* -i prevents missed hits due to case mismatch.
+* Use wildcards (*) to search across multiple logs in one command.
 
 ### 2. The "Permissions Lockdown" Lab
 
