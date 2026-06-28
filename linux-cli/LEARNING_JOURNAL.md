@@ -14,11 +14,19 @@ Lesson Review:
 
 ## [2026-06-25] Session: CLI Streams & Redirection
 
-**Topics:** >, >>, |, 1>, 2> /dev/null.
+**Topics:** >, >>, <, 1>, 2> /dev/null.
 **Relection:**
 
 - The pipe operator (|) is the "bridge" between programs
 - Using `grep` with pipes is how I will triage log files in the real world.
+- When using angle brackets (>), (>>) to redirect output to a file a single angle bracket replaces the entire contents of the file with new content and the double bracket appends the output to the end of the file without removing existing content.
+- Example: echo "text" >> file.txt with add "text to the end rather than replace it.
+- Using 2> followed by the file name will redirect any error message to .txt file. Opposed to 1> which refers to standard output.
+- You can ridirect both standard output and stardard error to the same file like 1> file.txt 2> file.txt
+- The purpose of /dev/null is it acts as a black hole for data if redirected to it then it's discarded and not saved. (used to surpress outputs or errors).
+- Example: ls 2> /dev/null will hide any error messages, or command > /dev/null will suppress standard output.
+- Angle bracket (<) reads from a file and feeds it into standard in.
+- In the grep command `'text' < input.txt > output.txxt 2> /dev/null` Standard input is fread from `input.txt (via <)`, standard output is redirected to `output.txt (via >)`, and standard error is redirected to `/dev/null (via 2>)` effectively ignoring any errors.
 
 Reference Data:
 
@@ -66,7 +74,7 @@ Reference Data:
 4. What is the difference between using '1>' and '2>' in output redirection?
    '1>' redirects standard output (stdout) to a file, while '2>' redirects standard error (stderr) to a file. The numbers refer to file descriptors: 1 for standard output and 2 for standard error.
 
-5. In the command 'grep "text" < input.txt > output.txt 2> /dev/null', what happens to each stream?
+5. In the command `grep "text" < input.txt > output.txt 2> /dev/null`, what happens to each stream?
    Standard input is read from input.txt (via <), standard output is redirected to output.txt (via >), and standard error is redirected to /dev/null (via 2>), effectively ignoring any errors.
 
 6. What does the angle bracket < do in a command?
@@ -90,7 +98,7 @@ Reference Data:
 **Key Takeaways:**
 
 - Graceful vs Forced: Use SIGTERM (default) to ask a process to clean up; use SIGKILL (9) only when a process is unresponsive
-- User Control: Ctrl+C (SIGINT) is for your manuall interrupts; Ctrl+D (SIGQUIT) is for a more forceful session shutdown.
+- User Control: Ctrl+C (SIGINT) is for your manual interrupts; Ctrl+D (SIGQUIT) is for a more forceful session shutdown.
 - OS Lifecycle: The OS sends SIGTERM automatically durign shutdowns to protect data integrity.
 
 Real-World Application: In an AV (Autonomous Vehicle) fleet, I should never use SIGKILL unless a process has frozen completely. Using SIGTERM ensures the system saves its logs and closes connections, which is critical for debugging why the vehicle stopped.
@@ -187,9 +195,10 @@ Lesson Review (VIM Basic Commands):
 
 **Topics:** Version Control, Repository Sync, and Authentication.
 **Key Takeaways:**
-* Source of Truth: always create the repo on GitHub first to establish the remote origin.
-* The "Snapshot" Loop: Every set of changes must be added and committed before it can be pushed.
-* Authentication: GitHub uses Personal Access Tokens (PAT) INSTEAD OF PASSWORDS. If you get a 403 error, your token may have expired or you need to refresh you remote origin URL.
+
+- Source of Truth: always create the repo on GitHub first to establish the remote origin.
+- The "Snapshot" Loop: Every set of changes must be added and committed before it can be pushed.
+- Authentication: GitHub uses Personal Access Tokens (PAT) INSTEAD OF PASSWORDS. If you get a 403 error, your token may have expired or you need to refresh you remote origin URL.
 
 Standard Workflow (The Daily "Reps"):
 
@@ -205,13 +214,109 @@ If git push fails due to authentication:
 1. Generate new Classic PAT in GitHub Settings > Developer Settings.
 
 2. Update the remote URL:
-git remote set-url origin [https://YOUR_TOKEN@github.com/marleyske/Engineering-Authority-Sprint-2026.git]
+   git remote set-url origin [https://YOUR_TOKEN@github.com/marleyske/Engineering-Authority-Sprint-2026.git]
 
 3. Retry the push
 
 Reflection:
 
 Documenting the workflow now ensures that I don't lose time on configuration during future lab sessions. I will add this section whenever I encounter a new Git command or error.
+
+## [2026-6-28] Session: Creating & Moving Files
+
+**Topics:** rm, cp, rm -rf
+**Key Takeaways:**
+
+- Using the rm command removes a file.
+- Using -rf flag with the rm command is dangerous could delete your whole computer.
+- -r flag meand recursive delete and allows you to delete directories. -f flag meand force which prevents the system from prompting for confirmantion before deleting each file.
+- cp (copy) creates a duplicate file or directory while keeping the other.
+- mv (move) relocates/rename the file or directory moving it from original location. (primary purpose is to rename files & directories).
+
+## Reference Data:
+
+Lesson Review (Creating & Moving Files):
+
+1. What does the touch command do when used on a file that doesn't exist?
+   The touch command creates a new empty file if the file doesn't exist.
+
+2. What happens when you run the touch command on a file that already exists?
+
+3. When used on an existing file, touch updates the file's last modified time without changing the file's contents.
+
+4. Why is the rm command considered dangerous, and what should you be aware of when using it?
+   The rm command is dangerous because it permanently deletes files and directories with no way to recover them. Unlike moving files to a recycle bin, files removed with rm are legitimately gone and cannot be recovered. Using incorrect flags like rm -rf \* or rm -rf / can delete the entire system.
+
+5. What do the -r and -f flags mean when used with the rm command?
+   The -r flag stands for recursive delete and allows you to delete directories and their contents. The -f flag stands for force and prevents the system from prompting for confirmation before deleting each file.
+
+6. What is the difference between cp and mv commands in Linux?
+   cp (copy) creates a duplicate of a file or directory while keeping the original, whereas mv (move) relocates or renames a file or directory, removing it from its original location.
+
+7. What does the cp -R command do?
+   It recursively copies directories and their contents
+
+8. What is the primary purpose of the mv command?
+   To move or rename files and directories
+
+Reflection:
+
+## [2026-6-28] Session: Wildcards & Replacement
+
+**Topics:** `*`, `?`, {1,2,3,4,5}, {1..5}, {1..100..10}
+**Key Takeaways:**
+
+-
+
+## Reference Data:
+
+Lesson Review (Wildcards & Replacements):
+
+1. What does the curly brace syntax `{1,2,3,4}` do in a bash command like `touch file{1,2,3,4}.txt`?
+   The curly brace syntax performs expansion, creating multiple variations of the command. In this example, it expands to create file1.txt, file2.txt, file3.txt, and file4.txt. Bash expands this before passing it to the command, so the program receives the full list of filenames.
+
+2. What is the difference between the `*` wildcard and the `?` wildcard in bash?
+   The _ wildcard matches zero or more characters, while the ? wildcard matches exactly one character. For example, `file_.txt`will match`'file.txt', 'file1.txt'`, and `'file10.txt'`, but `file?.txt`will only match filenames with exactly one character between`'file'`and`'.txt'`, like `'file1.txt'`but not`'file.txt'`or`'file10.txt'`.
+
+3. How can you create files numbered 1 through 30 using bash expansion syntax?
+   You can use the range syntax with two dots: touch file{1..30}.txt. This will create file1.txt through file30.txt. The double dot syntax works for numeric ranges and can also be used with letters.
+
+4. What does the syntax `{1..100..10}` do in bash expansion?
+   It creates a range from 1 to 100, incrementing by 10 each time. This produces: 1, 11, 21, 31, 41, 51, 61, 71, 81, 91. The third number specifies the step increment for the range.
+
+5. How do you create a filename that contains a space character in bash?
+   You escape the space character with a backslash: touch file\ name. The backslash tells bash to treat the next character literally rather than as a special character, allowing the space to be part of the filename.
+
+6. What does the expansion `{1..10}` generate?
+   The numbers 1 through 10.
+
+Reflection:
+
+## [2026-6-28] Session: Pipes
+
+**Topics:** Pipes Usage
+**Key Takeaways:**
+
+- (|) is used to create a pipe that connects output of on program to input of another.
+- `grep` is frequently used with `|` pipes; it takes a list of text and find specific items in it. (usefull for thoughts of lines of output).
+- The command `ps aux | grep "node"` takes long output from all running processes and feeds it into grep to filter only processes matchin "node".
+- The grep process detects itself in the process list because the search string appears in its own command.
+
+Reflection:
+
+Using pipes and grep along with ps aux helps sort through long outputs when searching for something specific. Both `grep` & `|` commands are frequently used with eachother to find specific items within a pipe. I will use these whenever I need to find something specific in a full output that an be timely to sort through manually.
+
+## [2026-6-28] Session: Priciples of Least Power
+
+**Topscs:**
+**Key Takeaways:**
+
+-
+-
+-
+-
+
+Reflection:
 
 ### 1. The "Triage & Rescue" Lab (Simulation)
 
@@ -222,7 +327,7 @@ This lab simulates the exact work of an autonomous vehicle support specialist: f
 - **The Documentation:** Once you find the error, use `nano` or `vim` to create a new file named `incident_report.txt`. In that file, log the filename where the error was found, the time (you can make this up), and a brief description of how you found it.
 - **Why this works:** It forces you to use `grep`, file navigation, and documentation—the three pillars of the role you applied for.
 
-Answer:
+### Answer:
 
 ERROR Files:
 
@@ -234,16 +339,23 @@ Time: 7:20pm
 
 Description:
 
-I found these errors by running the grep -ni "error" system_* command and obtained the file errors and also the line number.
+I found these errors by running the `grep -ni "error" system_*` command and obtained the file errors and also the line number.
 
 ## CLI Triage Patterns:
 
 ### Pattern: Log Searching
 
-* Use grep -ni <pattern> <files> as the default search.
-* -n provides the location (line number) for fast navigation.
-* -i prevents missed hits due to case mismatch.
-* Use wildcards (*) to search across multiple logs in one command.
+- Use grep -ni <pattern> <files> as the default search.
+- -n provides the location (line number) for fast navigation.
+- -i prevents missed hits due to case mismatch.
+- Use wildcards (`*`) to search across multiple logs in one command.
+
+### Pattern: Delete Lines Matching Phrase
+
+- Use `sed -i `/YOUR_MESSAGE_HERE/d' filename.txt
+- -i modifies you file in-place (saves the changes automatically).
+- `/YOUR_MESSAGE_HERE/' : search for the text you want to remove.
+- d: Deletes the matching line.
 
 ### 2. The "Permissions Lockdown" Lab
 
@@ -264,17 +376,30 @@ You are currently studying pipes, which is the ultimate tool for a Support Speci
 
 - **Why this works:** This is exactly how you will "triage" data in a real-world environment. You will be filtering massive amounts of system output to find the _one_ piece of information that matters.
 
-### 4. Professionalizing your "Architect's Decision Log"
+### Answer:
 
-Since you are already keeping this log, use it to track these labs!
+ubuntu@first-skink:~/log_simulation$ ls -l | grep "log"
+-rw-rw-r-- 1 ubuntu ubuntu 26 Jun 25 23:33 system_1.log
+-rw-rw-r-- 1 ubuntu ubuntu 26 Jun 25 23:33 system_2.log
+-rw-rw-r-- 1 ubuntu ubuntu 71 Jun 25 23:35 system_3.log
+-rw-rw-r-- 1 ubuntu ubuntu 26 Jun 25 23:34 system_4.log
+-rw-rw-r-- 1 ubuntu ubuntu 103 Jun 25 23:37 system_5.log
+ubuntu@first-skink:~/log_simulation$ history | grep "ssh"
+56 history | grep "ssh"
 
-- Every time you complete one of these mini-labs, add an entry to your `LEARNING_JOURNAL.md`.
-- **Format:**
+### Architect's Decision Log:
+
+- **Date:** 2026-06-25 7:20pm
+- **Task:** Triage & Rescue
+- **Outcome:** Successfully identified "ERRORS" with time and line number when `grep -ni "error" system_*` was applied. Resolved by updating vim with those said errors, files they were in, time and line numbers.
+- **Reflection:** This confirmed how system folders containing errors in their files can fail.
+
 - **Date:** 2026-06-25
 - **Task:** Permission Lockdown Lab
 - **Outcome:** Successfully identified "Permission denied" error when `chmod 000` was applied. Resolved by restoring read permissions.
 - **Reflection:** This confirmed how system services might fail if they lack access to critical configuration files.
 
-**My suggestion for your flow:** Spend 30 minutes a day on one of these "labs" rather than just watching more video content. If you can explain _why_ a command worked (or why it failed) in your journal, you will walk into an interview with the confidence of someone who has actually been "in the trenches."
-
-**Does this "Lab" approach feel like a good way to get those reps in without feeling like you're just staring at a screen?**
+- **Date:**
+- **Task:**
+- **Outcome:**
+- **Reflection:**

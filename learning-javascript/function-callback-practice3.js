@@ -129,7 +129,6 @@ function translator(isAllowed) {
 checkPermission("admin", translator);
 checkPermission("guest", translator);
 
-
 // [INCCORECT ANSWER]:
 
 // function addTen(number, callback) {
@@ -147,18 +146,17 @@ checkPermission("guest", translator);
 
 // The Machine (The Kitchen)
 function addTen(number, callback) {
-    const result = number + 10;
-    // The Machine hands the 'result' to the 'callback'
-    callback(result); 
+  const result = number + 10;
+  // The Machine hands the 'result' to the 'callback'
+  callback(result);
 }
 
 // The Helper (The Waiter)
 function showResult(data) {
-    // The Waiter receives the 'data' (which is the result from above)
-    // and decides to print it.
-    console.log("The final answer is: " + data);
+  // The Waiter receives the 'data' (which is the result from above)
+  // and decides to print it.
+  console.log("The final answer is: " + data);
 }
 
 // The Run
 addTen(5, showResult);
-
