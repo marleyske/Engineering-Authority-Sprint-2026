@@ -23,7 +23,7 @@
 - Inside my showResult function I was calling addTen again. showResult should only be responsible for showing the resultm not for running the addTen machine again.
 
 - **The Architectural" Lesson:**
-- What this taught you about writing cleaner code.
+- What this taught me about writing cleaner code.
 
 ### Code "Laboratory" (The Best Snippet):
 

@@ -276,16 +276,16 @@ Lesson Review (Wildcards & Replacements):
    The curly brace syntax performs expansion, creating multiple variations of the command. In this example, it expands to create file1.txt, file2.txt, file3.txt, and file4.txt. Bash expands this before passing it to the command, so the program receives the full list of filenames.
 
 2. What is the difference between the `*` wildcard and the `?` wildcard in bash?
-   The _ wildcard matches zero or more characters, while the ? wildcard matches exactly one character. For example, `file_.txt`will match`'file.txt', 'file1.txt'`, and `'file10.txt'`, but `file?.txt`will only match filenames with exactly one character between`'file'`and`'.txt'`, like `'file1.txt'`but not`'file.txt'`or`'file10.txt'`.
+   The `*` wildcard matches zero or more characters, while the `?` wildcard matches exactly one character. For example, `file_.txt`will match`'file.txt', 'file1.txt'`, and `'file10.txt'`, but `file?.txt`will only match filenames with exactly one character between`'file'`and`'.txt'`, like `'file1.txt'`but not`'file.txt'`or`'file10.txt'`.
 
 3. How can you create files numbered 1 through 30 using bash expansion syntax?
-   You can use the range syntax with two dots: touch file{1..30}.txt. This will create file1.txt through file30.txt. The double dot syntax works for numeric ranges and can also be used with letters.
+   You can use the range syntax with two dots: `touch file{1..30}.txt`. This will create `file1.txt` through `file30.txt`. The double dot syntax works for numeric ranges and can also be used with letters.
 
 4. What does the syntax `{1..100..10}` do in bash expansion?
    It creates a range from 1 to 100, incrementing by 10 each time. This produces: 1, 11, 21, 31, 41, 51, 61, 71, 81, 91. The third number specifies the step increment for the range.
 
 5. How do you create a filename that contains a space character in bash?
-   You escape the space character with a backslash: touch file\ name. The backslash tells bash to treat the next character literally rather than as a special character, allowing the space to be part of the filename.
+   You escape the space character with a backslash: `touch file\ name`. The backslash tells bash to treat the next character literally rather than as a special character, allowing the space to be part of the filename.
 
 6. What does the expansion `{1..10}` generate?
    The numbers 1 through 10.
@@ -302,6 +302,31 @@ Reflection:
 - The command `ps aux | grep "node"` takes long output from all running processes and feeds it into grep to filter only processes matchin "node".
 - The grep process detects itself in the process list because the search string appears in its own command.
 
+## Reference Data:
+
+Lesson Review (Pipes):
+
+1. What symbol is used to create a pipe that connects the output of one program to the input of another?
+   The vertical bar (|) symbol, located above the Enter key, is used to create a pipe between programs.
+
+2. What does the command ps aux do?
+   ps aux outputs all of the currently running processes on the computer.
+
+3. Why is grep frequently used with pipes in command line operations?
+   grep is frequently used with pipes because it takes a list of text and finds specific items in it. This is useful when dealing with thousands of lines of output where you need to find specific entries.
+
+4. In the command ps aux | grep "node", what is the purpose of the pipe?
+   The pipe takes the long output from ps aux (all running processes) and feeds it into grep to filter and find only the processes matching "node".
+
+5. What is the purpose of the -i flag when used with the rm command?
+   The -i flag forces the rm command to ask yes or no questions before removing each file, providing an interactive confirmation for each deletion.
+
+6. What does the ampersand (&) at the end of a command do?
+   Runs the process in the background
+
+7. In the command ps aux | grep "yes", why does grep sometimes appear in its own search results?
+   The grep process detects itself in the process list because the search string appears in its own command.
+
 Reflection:
 
 Using pipes and grep along with ps aux helps sort through long outputs when searching for something specific. Both `grep` & `|` commands are frequently used with eachother to find specific items within a pipe. I will use these whenever I need to find something specific in a full output that an be timely to sort through manually.
@@ -315,6 +340,130 @@ Using pipes and grep along with ps aux helps sort through long outputs when sear
 -
 -
 -
+
+## Reference Data:
+
+Lesson Review (Principles of Least Power):
+
+1. What is the purpose of the whoami command in Linux?
+   The whoami command displays the name of the currently logged-in user. It identifies which user account you are operating under in the terminal session.
+
+2. What file can you view to see all users on a Linux system, and how do you display it?
+   You can view the /etc/passwd file using the command cat /etc/passwd. This file contains a list of all user accounts on the system, including system users and regular users.
+
+3. What does it mean when a user's login shell is set to /bin/false in the /etc/passwd file?
+   When a user's login shell is set to /bin/false, it means the user cannot log in interactively. The /bin/false program simply returns false, preventing interactive login while still allowing the user account to exist for other purposes like running services.
+
+4. What is the principle of least power in the context of Linux user accounts?
+   The principle of least power means giving each user account only the minimum amount of permissions necessary to perform its required tasks. This limits potential damage from both security breaches and accidental mistakes by restricting what actions unprivileged users can perform.
+
+5. Why is the root user significant in Linux file system permissions?
+   The root user has inherent privileges to perform any operation on the system, including creating, modifying, or deleting files in protected directories like the root directory (/). Only root can make changes to system-level directories and files that regular users cannot access.
+
+6. Which user has inherent privileges to create files and directories in the root directory (/)?
+   Root
+
+Reflection:
+
+## [2026-6-28] Session: Superuser
+
+**Topics:**
+**Key Takeaways:**
+
+-
+
+## Reference Data:
+
+Lesson Review (Superuser):
+
+1. What is the purpose of the sudo command in Linux?
+   The sudo command allows a user to temporarily switch to the super user (root) to execute a single command with elevated privileges, then immediately return to their normal user account. This provides a safeguard against accidental system damage while still allowing authorized users to perform administrative tasks.
+   - Example: `sudo useradd marv`
+
+2. Why is it dangerous to continuously operate as the root user?
+   Operating as the root user is dangerous because you have unrestricted access to all system functions and files. This means mistakes can have catastrophic consequences, such as accidentally deleting critical system files. Running as a regular user with sudo privileges provides a safety net that prevents many accidental destructive actions.
+
+3. What command switches you to the root user, and how do you exit that session?
+   The command sudo su switches you to the root user, giving you full administrative privileges. To exit the root user session and return to your normal user account, use the exit command.
+4. What command switches you to the root user, and how do you exit that session?
+
+5. What are the commands to create a new user named 'alice' and set a password for that user?
+   To create a new user named 'alice', use sudo useradd alice. To set a password for that user, use sudo passwd alice, which will prompt you to enter and confirm the new password.
+
+6. What is the purpose of groups in Linux user management?
+   Groups allow you to manage privileges for multiple users efficiently. Instead of adding permissions individually to each user, you can assign permissions to a group and then add users to that group. All members of the group automatically inherit the group's permissions, making it easier to manage large numbers of users with similar access needs.
+
+7. Which command switches the current user to another user account?
+   Su
+
+8. What command is used to add a user to an existing group?
+   Usermod -aG
+
+Reflection:
+
+## [2026-6-28] Session: Group Permission
+
+**Topics:**
+**Key Takeaways:**
+
+-
+
+## Reference Data:
+
+Lesson Review (Group Permissions):
+
+1. In Linux file permissions (e.g., rwxrwxrwx), what do the three groups of permissions represent?
+   The first group (rwx) represents user permissions for the file owner. The second group (rwx) represents group permissions for anyone in the file's group. The third group (rwx) represents permissions for everyone else who is neither the owner nor in the group.
+
+2. What does the 'd' character mean when it appears as the first character in Linux file permissions?
+   The 'd' character indicates that the item is a directory (folder). A dash '-' indicates a normal flat file, such as a text file, JavaScript file, or image.
+
+3. What does the chown command do in Linux?
+   chown (change ownership) changes the ownership of a file or directory from one user and group to another. For example, sudo chown ubuntu:ubuntu /hello would change ownership of the /hello directory to the ubuntu user and ubuntu group.
+
+4. If a file has permissions -rw-r--r--, can a user who is neither the owner nor in the file's group write to the file?
+   No, they cannot write to the file. The last three characters r-- indicate that other users (those who are neither the owner nor in the group) can only read the file, not write to it or execute it.
+
+5. What is the syntax for using chmod to set specific read, write, and execute permissions for user, group, and other?
+   The syntax is chmod u=rwx,g=rwx,o=rwx filename where 'u' stands for user, 'g' stands for group, and 'o' stands for other. You can specify any combination of r (read), w (write), and x (execute) for each category. For example: sudo chmod u=rw,g=rw,o=rw hello.txt
+
+Reflection:
+
+## [2026-6-28] Session: Permission Shortcuts
+
+**Topics:**
+**Key Takeaways:**
+
+-
+
+## Reference Data:
+
+Lesson Review (Permission Shortcuts):
+
+1. The first number represents user permissions, the second number represents group permissions, and the third number represents permissions for others (everyone else).
+
+2. In the numeric chmod notation, what values do you add for read, write, and execute permissions?
+   Add 4 for read permissions, 2 for write permissions, and 1 for execute permissions. These values are combined to create the permission number (e.g., 7 = 4+2+1 = read, write, and execute).
+
+3. What permissions does chmod 700 grant on a file?
+   The user can read, write, and execute the file, while the group and others have no permissions at all.
+
+4. What does the command chmod +x filename do?
+   It adds executable permissions to the file for all permission categories (user, group, and others).
+
+5. Why is setting file permissions to 777 generally considered insecure?
+   Because 777 grants read, write, and execute permissions to everyone (user, group, and others), allowing anyone to do anything to the file, which is a very insecure practice.
+
+Reflection:
+
+## [2026-6-28] Session: Environments
+
+**Topics:**
+**Key Takeaways:**
+
+-
+
+## Reference Data:
 
 Reflection:
 
@@ -365,6 +514,29 @@ Support specialists often have to troubleshoot why a system service cannot acces
 - **The Task:** Try to read the file using `cat`. It should fail with a "Permission denied" error.
 - **The Fix:** Use `chmod` to add read permissions back so you can read it again.
 - **The Pro-Move:** Try to change the owner of a file using `chown` (you may need `sudo` for this). Understanding how ownership (`user:group`) and permissions (`rwx`) work together is a fundamental skill for any technical support role.
+
+### Answer:
+
+- marvinbutleriii@marvinbutleriii:~$ chmod 000 sensitive_data.txt 
+marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
+0 ---------- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+marvinbutleriii@marvinbutleriii:~$ cat sensitive_data.txt 
+cat: sensitive_data.txt: Permission denied
+marvinbutleriii@marvinbutleriii:~$ sudo su
+root@marvinbutleriii:/home/marvinbutleriii# chmod 666 sensitive_data.txt 
+root@marvinbutleriii:/home/marvinbutleriii# ls -lsah sensitive_data.txt 
+0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+root@marvinbutleriii:/home/marvinbutleriii# exit
+exit
+marvinbutleriii@marvinbutleriii:~$ sudo chown marvinbutleriii:marvinbutleriii sensitive_data.txt 
+marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
+0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+marvinbutleriii@marvinbutleriii:~$ chmod 000 sensitive_data.txt 
+marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
+0 ---------- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+marvinbutleriii@marvinbutleriii:~$ chmod 666 sensitive_data.txt 
+marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
+0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
 
 ### 3. Mastering the "Pipe" (`|`)
 
