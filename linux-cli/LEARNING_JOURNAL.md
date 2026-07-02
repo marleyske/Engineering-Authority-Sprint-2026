@@ -14,7 +14,7 @@ Lesson Review:
 
 ## [2026-06-25] Session: CLI Streams & Redirection
 
-**Topics:** >, >>, <, 1>, 2> /dev/null.
+**Topics:** >, >>, <, 1>, 2>, |, /dev/null.
 **Relection:**
 
 - The pipe operator (|) is the "bridge" between programs
@@ -26,7 +26,7 @@ Lesson Review:
 - The purpose of /dev/null is it acts as a black hole for data if redirected to it then it's discarded and not saved. (used to surpress outputs or errors).
 - Example: ls 2> /dev/null will hide any error messages, or command > /dev/null will suppress standard output.
 - Angle bracket (<) reads from a file and feeds it into standard in.
-- In the grep command `'text' < input.txt > output.txxt 2> /dev/null` Standard input is fread from `input.txt (via <)`, standard output is redirected to `output.txt (via >)`, and standard error is redirected to `/dev/null (via 2>)` effectively ignoring any errors.
+- In the grep command `'text' < input.txt > output.txxt 2> /dev/null` Standard input is freed from `input.txt (via <)`, standard output is redirected to `output.txt (via >)`, and standard error is redirected to `/dev/null (via 2>)` effectively ignoring any errors.
 
 Reference Data:
 
@@ -168,7 +168,7 @@ Lesson Review (VIM a Brief History):
 7. What command can you use in 'ex' to switch to visual mode?
    :visual
 
-Lesson Review (VIM Basic Commands):
+### Lesson Review (VIM Basic Commands):
 
 1. What is the command to quit vim?
    The command to quit vim is :q. To force quit without saving changes, use :q!
@@ -235,7 +235,7 @@ Documenting the workflow now ensures that I don't lose time on configuration dur
 
 ## Reference Data:
 
-Lesson Review (Creating & Moving Files):
+### Lesson Review (Creating & Moving Files):
 
 1. What does the touch command do when used on a file that doesn't exist?
    The touch command creates a new empty file if the file doesn't exist.
@@ -270,7 +270,7 @@ Reflection:
 
 ## Reference Data:
 
-Lesson Review (Wildcards & Replacements):
+### Lesson Review (Wildcards & Replacements):
 
 1. What does the curly brace syntax `{1,2,3,4}` do in a bash command like `touch file{1,2,3,4}.txt`?
    The curly brace syntax performs expansion, creating multiple variations of the command. In this example, it expands to create file1.txt, file2.txt, file3.txt, and file4.txt. Bash expands this before passing it to the command, so the program receives the full list of filenames.
@@ -298,7 +298,7 @@ Reflection:
 **Key Takeaways:**
 
 - (|) is used to create a pipe that connects output of on program to input of another.
-- `grep` is frequently used with `|` pipes; it takes a list of text and find specific items in it. (usefull for thoughts of lines of output).
+- `grep` is frequently used with `|` pipes; it takes a list of text and find specific items in it. (useful for thoughts of lines of output).
 - The command `ps aux | grep "node"` takes long output from all running processes and feeds it into grep to filter only processes matchin "node".
 - The grep process detects itself in the process list because the search string appears in its own command.
 
@@ -333,13 +333,13 @@ Using pipes and grep along with ps aux helps sort through long outputs when sear
 
 ## [2026-6-28] Session: Priciples of Least Power
 
-**Topscs:**
+**Topics:** User Priviledge
 **Key Takeaways:**
 
--
--
--
--
+- The `whoami` command displays the name of the current logged-in user
+- `cat /etc/passwd` is the command you use to see all users on a linux system.
+- The priciple of least power means giving minimal amount of permission to each user account neccssary to perform required task. The root user has inherant priviledge to perform any operation on the system.
+- Root user has inherant priviledge to creat files and directories in the root directory.
 
 ## Reference Data:
 
@@ -363,14 +363,18 @@ Lesson Review (Principles of Least Power):
 6. Which user has inherent privileges to create files and directories in the root directory (/)?
    Root
 
-Reflection:
+Reflection: The priciple of least power gives each user account only the minimum amout of permission sneccessary to perform required tasks. The root has inherent privileges to create files & directories in the root directory (/). I can use `cat /etc/passwd` to see all users on linux system, and whoami let's me know which user account i'm logged in as at the moment.
 
 ## [2026-6-28] Session: Superuser
 
 **Topics:**
 **Key Takeaways:**
 
--
+- `sudo` command temporarily allos a user to switch to the super user to execute a single command with elevated privileges, then returns to their user account.
+- `su` command switches you to another user account and `sudo su` switches you to super user (root).
+- `sudo useradd [username]` (`su` for root) is the command to create a new user and `sudo passwd [username]` creates them a password.
+- Groups allow you to manage mutiple users permmisons instead of having to do them seperately. You can use `usermod -aG` command.
+- Example, add user to sudo group: `sudo usermod -aG sudo newtech`
 
 ## Reference Data:
 
@@ -385,28 +389,30 @@ Lesson Review (Superuser):
 
 3. What command switches you to the root user, and how do you exit that session?
    The command sudo su switches you to the root user, giving you full administrative privileges. To exit the root user session and return to your normal user account, use the exit command.
-4. What command switches you to the root user, and how do you exit that session?
 
-5. What are the commands to create a new user named 'alice' and set a password for that user?
+4. What are the commands to create a new user named 'alice' and set a password for that user?
    To create a new user named 'alice', use sudo useradd alice. To set a password for that user, use sudo passwd alice, which will prompt you to enter and confirm the new password.
 
-6. What is the purpose of groups in Linux user management?
+5. What is the purpose of groups in Linux user management?
    Groups allow you to manage privileges for multiple users efficiently. Instead of adding permissions individually to each user, you can assign permissions to a group and then add users to that group. All members of the group automatically inherit the group's permissions, making it easier to manage large numbers of users with similar access needs.
 
-7. Which command switches the current user to another user account?
+6. Which command switches the current user to another user account?
    Su
 
-8. What command is used to add a user to an existing group?
+7. What command is used to add a user to an existing group?
    Usermod -aG
 
-Reflection:
+Reflection: Superuser is your root user, you use command `sudo su` to switch to root user. It is insecure to operate as the root user instead using sudo for temporary root access is key. For users to use sudo command you have to assign them to the sudo group using the `sudo usermod -aG sudo [user]` command. You add users with the `useradd` command, assign their password with `sudo passwd [user]` command and you can alternate/move between users on the linux system by using the `su` command. Lastly, you can switch back from user you used `su` command for by using the `exit` command.
 
 ## [2026-6-28] Session: Group Permission
 
-**Topics:**
+**Topics:** Permissions `chown`, `chmod`
 **Key Takeaways:**
 
--
+- The three groups of permissions represent users (file owner), groups and everyone else.
+- `d` in the file permissions means the item is a directory `-` indicates it's a flat file, (text, js or img).
+- `chown` command means change ownership which, does just that by using `sudo chown` when not in the root directory you can switch ownership between a file or directory after confirming your password.
+- `chmod` changes the rwx (read, write, execute) permissions and the syntax for using chmod is either `chmod u-rwx,g=rwx,o=rww [file]`.
 
 ## Reference Data:
 
@@ -427,20 +433,24 @@ Lesson Review (Group Permissions):
 5. What is the syntax for using chmod to set specific read, write, and execute permissions for user, group, and other?
    The syntax is chmod u=rwx,g=rwx,o=rwx filename where 'u' stands for user, 'g' stands for group, and 'o' stands for other. You can specify any combination of r (read), w (write), and x (execute) for each category. For example: sudo chmod u=rw,g=rw,o=rw hello.txt
 
-Reflection:
+Reflection: When it comes to permissions you have three groups, the users, groups, and everyone else. the `d` stands for directory and `-` stands for flat file, .txt, .js or .img. The command used to change ownership is `chown` this command is key. It is great for switching ownership of a file from one user to another. Lastly, the `chmod` command. This command is a frequent use for me it modifies the permissions I spoke about earlier you can use it to give users on the linux system different read, write and execute permission based on their group.
 
 ## [2026-6-28] Session: Permission Shortcuts
 
-**Topics:**
+**Topics:** chmod, chmod +x, setting file permissions
 **Key Takeaways:**
 
--
+- The three numbers in `chmod 777` represents user permissions, group permissions and everyone else (others).
+- The numeric chmod notation values you add for read, write and execute are 4 for read permission, 2 for write permission and 1 for execute permission.
+- Use `chmod +x` to add execution permission to all categories.
+- Setting file permissions to 777 is insecure because it grants read, write and execute permissions to all categories allowing anyone to do anything to the file.
 
 ## Reference Data:
 
 Lesson Review (Permission Shortcuts):
 
-1. The first number represents user permissions, the second number represents group permissions, and the third number represents permissions for others (everyone else).
+1. What do the three numbers in chmod 777 represent?
+   The first number represents user permissions, the second number represents group permissions, and the third number represents permissions for others (everyone else).
 
 2. In the numeric chmod notation, what values do you add for read, write, and execute permissions?
    Add 4 for read permissions, 2 for write permissions, and 1 for execute permissions. These values are combined to create the permission number (e.g., 7 = 4+2+1 = read, write, and execute).
@@ -454,9 +464,60 @@ Lesson Review (Permission Shortcuts):
 5. Why is setting file permissions to 777 generally considered insecure?
    Because 777 grants read, write, and execute permissions to everyone (user, group, and others), allowing anyone to do anything to the file, which is a very insecure practice.
 
-Reflection:
+Reflection: The permission shortcuts help with quick group permission changes. Command `chmod 777` is a example of numeric chmod notation values you add to read, write and execute. 4 for read permissions, 2 for write permissions and 1 for execute permission, following a 4+2+1 numerical system. `chmod +x` adds execute permissions to all groups. One thing to remember with the `chmod 777` command it is insecure grantion read, write and execute permissions to all users isn't ideal.
 
-## [2026-6-28] Session: Environments
+## [2026-7-1] Session: Environments
+
+**Topics:** /etc/environment, .bashrc, .bash_profile & some scripting
+**Key Takeaways:**
+
+- To display all currently set environment variables in bash shell use `printenv`
+- You can reference an environment variable ($) before a variable ex. `$USER`.
+- When you modify an environment directly in the shell using `VARIABLE=value` it persist for the current session only.
+- If in one of the users other than root use `sudo vi /etc/environment` to set environment variables that need to be available to all users.
+- .bashrc file is a script that runs at the beginning of every bash session for a specific user located in it's home directory (`~/.bashrc`). It's used for customizations like setting environment variables, changing the prompt, setting up colors, and scripts for that user only.
+- .bash_profile runs on login. .bashrc runs on every new interactive terminal window. That is why you "source" the bashrc-so that your termianl settings persist even if you aren't logging in fresh from the terminal screen.
+- .bash_profile should source .bashrc to ensure consistency. The bash script syntax to ensure bashrc is being run (use in `~/.bash_profile`):
+  if [ -f ~/.bashrc ]; then
+  source ~/.bashrc
+  fi
+- Every user has their own .bashrc
+
+## Reference Data:
+
+### Lesson Review (Environments):
+
+1. What command can be used to display all currently set environment variables in a bash shell?
+   The printenv command displays all currently set environment variables in a bash shell.
+
+2. How do you reference an environment variable in bash to use its value in a command?
+   You reference an environment variable using a dollar sign ($) before the variable name. For example, echo $USER will display the value of the USER variable. Bash interprets and replaces the variable with its value before running the command.
+
+3. Where should you set environment variables that need to be available to all users on a system?
+   Environment variables that should be available to all users can be set in sudo vi /etc/environment (if not in root). Any variables defined in this file will be available to every user on the system when they start a bash session.
+
+4. What is the purpose of the .bashrc file and where is it located?
+   The .bashrc file is a script that runs at the beginning of every bash session for a specific user. It is located in the user's home directory (~/.bashrc) and is used for customizations like setting environment variables, changing the prompt, setting up colors, and defining scripts for that user only.
+
+5. What is the difference between .bashrc and .bash_profile in terms of when they are executed?
+   .bashrc is run every time a bash session starts, while .bash_profile is only run at the first interactive login shell. .bashrc is used for general configurations, while .bash_profile is a relic of the past and typically should just source .bashrc to ensure consistent behavior.
+
+6. When you modify an environment variable directly in the shell using the syntax VARIABLE=value , how long does that change persist?
+   For the current session only
+
+7. What does the export keyword do when setting a variable in bash?
+   It makes the variable available to the general environment
+
+8. What is the recommended difference between .bashrc and .bash_profile?
+   .bash_profile should source .bashrc to ensure consistency
+
+Reflection: Use the `printenv` command to view all environment variables in bash shell. You can reference a environment variable with the `$` command. Modifying an environment directly in the shell it persist for that session only. To set environment variable that needs to be used by all users the `/etc/environment` command is the command to use (use `sudo /etc/environemnt` if not root user). To do some customization like setting environemnt variables, changing the prompts, setting up colors and scripts for that user only that is the purpose of the .bashrc file (`~/.bashrc`). It's a script tha runs at the beginning of every bash session for a specific user located in it's home directory. The .bash_profile should source the .bashrc file to ensure consistency. I use the script:
+if [ -f ~/.bashrc ]; then
+source ~/.bashrc
+fi
+This script makes sure to source the .bashrc file everytime when using assigned environment variables.
+
+## [2026-7-1] Session: Processes
 
 **Topics:**
 **Key Takeaways:**
@@ -464,6 +525,29 @@ Reflection:
 -
 
 ## Reference Data:
+
+### Lesson Review (Proccesses):
+
+1. What does the ps command without any arguments display?
+   The ps command withough arguments displays only the processes currently running by the current user. This typically includes the bash shell and the ps command itself.
+
+2. What is the purpose of the aux flags when used with the ps command?
+   The aux flags with the ps command display all processes running on the system by all users, not just the current user's processess. This provides a comprehensive view of everything running on the system.
+
+3. What doe the PID stand for and what is its purpose?
+   PID stands for Process ID. It is a unique identifier assigned to each running process that allows you to refer to and manage specific processes, such as when using the kill command.
+
+4. What happens when you press Ctrl+Z while a process is running in the foreground?
+   Pressing Ctrl+Z stops the currently running foreground process and returns control to the interactive shell. The process is paused (not terminated) and can be resumed later in the background or foreground.
+
+5. What is the difference between the bg and fg commands when managing jobs?
+   The bg command resumes a stopped process in the background, allowing you to continue using the shell interactively. The fg command brings a background process to the foreground, displaying its output and blocking the shell until it completes or is stopped.
+
+6. What does the kill -9 command do to a process?
+   Terminates the process
+
+7. What does adding an ampersand (&) at the end of a command do?
+   Send the command to the background
 
 Reflection:
 
@@ -517,26 +601,26 @@ Support specialists often have to troubleshoot why a system service cannot acces
 
 ### Answer:
 
-- marvinbutleriii@marvinbutleriii:~$ chmod 000 sensitive_data.txt 
-marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
-0 ---------- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
-marvinbutleriii@marvinbutleriii:~$ cat sensitive_data.txt 
-cat: sensitive_data.txt: Permission denied
-marvinbutleriii@marvinbutleriii:~$ sudo su
-root@marvinbutleriii:/home/marvinbutleriii# chmod 666 sensitive_data.txt 
-root@marvinbutleriii:/home/marvinbutleriii# ls -lsah sensitive_data.txt 
-0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
-root@marvinbutleriii:/home/marvinbutleriii# exit
-exit
-marvinbutleriii@marvinbutleriii:~$ sudo chown marvinbutleriii:marvinbutleriii sensitive_data.txt 
-marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
-0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
-marvinbutleriii@marvinbutleriii:~$ chmod 000 sensitive_data.txt 
-marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
-0 ---------- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
-marvinbutleriii@marvinbutleriii:~$ chmod 666 sensitive_data.txt 
-marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt 
-0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+- marvinbutleriii@marvinbutleriii:~$ chmod 000 sensitive_data.txt
+  marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt
+  0 ---------- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+  marvinbutleriii@marvinbutleriii:~$ cat sensitive_data.txt
+  cat: sensitive_data.txt: Permission denied
+  marvinbutleriii@marvinbutleriii:~$ sudo su
+  root@marvinbutleriii:/home/marvinbutleriii# chmod 666 sensitive_data.txt
+  root@marvinbutleriii:/home/marvinbutleriii# ls -lsah sensitive_data.txt
+  0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+  root@marvinbutleriii:/home/marvinbutleriii# exit
+  exit
+  marvinbutleriii@marvinbutleriii:~$ sudo chown marvinbutleriii:marvinbutleriii sensitive_data.txt
+  marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt
+  0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+  marvinbutleriii@marvinbutleriii:~$ chmod 000 sensitive_data.txt
+  marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt
+  0 ---------- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+  marvinbutleriii@marvinbutleriii:~$ chmod 666 sensitive_data.txt
+  marvinbutleriii@marvinbutleriii:~$ ls -lsah sensitive_data.txt
+  0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
 
 ### 3. Mastering the "Pipe" (`|`)
 
@@ -559,6 +643,266 @@ ubuntu@first-skink:~/log_simulation$ ls -l | grep "log"
 ubuntu@first-skink:~/log_simulation$ history | grep "ssh"
 56 history | grep "ssh"
 
+### 4. Configure Your Environment:
+
+- **Task:** Instesd of just practicing export, use your .bashrc or .bash_profile file to create a permanent alias or environment variable that helps you in your daily work.
+
+- **Why this works:** It gives me the practice I need to use .bashrc for creating environment variable needed to use frequently and the use of .bash_profile to set a script to assign the .bashrc environment variables as the go to source perminently.
+
+### Answer:
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+
+TEST_THING="blah blah"
+
+SUPPORT="answer"
+
+STAFF="newtech"
+
+$ STAFF=newtech
+$ echo Welcome $STAFF
+Welcome newtech
+$ cat /etc/environment
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
+
+TEST_THING="blah blah"
+
+SUPPORT="answer"
+
+$ sudo vi /etc/environment
+$ echo today we have training for the $STAFF
+today we have training for the newtech
+
+$ exit
+marvinbutleriii@marvinbutleriii:/home$ cd ~
+marvinbutleriii@marvinbutleriii:~$ sudo vi ~/.bashrc
+marvinbutleriii@marvinbutleriii:~$ sudo vi ~/.bash_profile
+marvinbutleriii@marvinbutleriii:~$ exit
+exit
+$ whoami
+marv
+$ exit
+marvinbutleriii@marvinbutleriii:/home$ exit
+exit
+marvinbutleriii@marvinbutleriii:/home$ su marv
+Password:
+$ whoami
+marv
+$ sudo vi ~/.bashrc
+[sudo] password for marv:
+`$` sudo vi ~/.bash_profile
+
+- I used this command above to run a a script to assign .bash_profile to use .bashrc as the go to environment reference for my new environment variables I created.
+- The script:
+  if [ -f ~/.bashrc ]; then
+  source ~/.bashrc
+  fi
+
+### 5. Practice System Administration:
+
+- **Task:** Create a "mock" environment where you have to set up multiple users, assign them specific permissions, and ensure they can only access the files they need.
+
+- **Why this works:** It ensures I know how to navigate the environment and modify permissions.
+
+### Answer:
+
+marvinbutleriii@marvinbutleriii:/home$ sudo useradd newtech
+marvinbutleriii@marvinbutleriii:/home$ sudo passwrd newtech
+marvinbutleriii@marvinbutleriii:/home$ sudo usermod -aG sudo newtech
+marvinbutleriii@marvinbutleriii:/home$ ls
+another-file.txt cool.txt marv marvinbutleriii marv.txt
+marvinbutleriii@marvinbutleriii:/home$ su newtech
+Password:
+$ whoami
+newtech
+$ sudo touch hire.txt
+[sudo] password for newtech:
+$ ls
+another-file.txt cool.txt hire.txt marv marvinbutleriii marv.txt
+$ ls -lsah
+total 20K
+4.0K drwxr-xr-x 4 root root 4.0K Jul 2 10:44 .
+4.0K drwxr-xr-x 23 root root 4.0K Dec 20 2025 ..
+0 -rw-r--r-- 1 root root 0 Jun 29 12:21 another-file.txt
+0 -rw-rw-rw- 1 marv marv 0 Jun 29 12:13 cool.txt
+0 -rw-r--r-- 1 root root 0 Jul 2 10:44 hire.txt
+4.0K drwxr--r-- 2 marv marv 4.0K Jul 2 01:57 marv
+4.0K drwxr-x--- 21 marvinbutleriii marvinbutleriii 4.0K Jul 2 01:54 marvinbutleriii
+4.0K -rw-rw-rw- 1 marv marv 28 Jul 1 11:55 marv.txt
+$ sudo chmod 666 hire.txt
+$ ls -lsah
+total 20K
+4.0K drwxr-xr-x 4 root root 4.0K Jul 2 10:44 .
+4.0K drwxr-xr-x 23 root root 4.0K Dec 20 2025 ..
+0 -rw-r--r-- 1 root root 0 Jun 29 12:21 another-file.txt
+0 -rw-rw-rw- 1 marv marv 0 Jun 29 12:13 cool.txt
+0 -rw-rw-rw- 1 root root 0 Jul 2 10:44 hire.txt
+4.0K drwxr--r-- 2 marv marv 4.0K Jul 2 01:57 marv
+4.0K drwxr-x--- 21 marvinbutleriii marvinbutleriii 4.0K Jul 2 01:54 marvinbutleriii
+4.0K -rw-rw-rw- 1 marv marv 28 Jul 1 11:55 marv.txt
+
+### 6. Environment and Pemissions Challenge:
+
+- **Task:** Create a script called sys_check.sh that prints the current user (whoami) and the date.
+
+Use chmod to make it executable (+x).
+
+Try to run it.
+
+Move it to a directory that is not in your $PATH.
+
+Try to run it by just typing sys_check.sh. It will fail.
+
+The Lab: Use the export command to add the script's directory to your $PATH. Now try to run it from anywhere.
+
+### Answer:
+
+marvinbutleriii@marvinbutleriii:/home$ sudo touch sys_check.sh
+[sudo] password for marvinbutleriii:
+marvinbutleriii@marvinbutleriii:/home$ ls -lsah
+total 20K
+4.0K drwxr-xr-x 4 root root 4.0K Jul 2 13:05 .
+4.0K drwxr-xr-x 23 root root 4.0K Dec 20 2025 ..
+0 -rw-r--r-- 1 root root 0 Jun 29 12:21 another-file.txt
+0 -rw-rw-rw- 1 marv marv 0 Jun 29 12:13 cool.txt
+0 -rw-rw-rw- 1 root root 0 Jul 2 10:44 hire.txt
+4.0K drwxr--r-- 2 marv marv 4.0K Jul 2 11:37 marv
+4.0K drwxr-x--- 21 marvinbutleriii marvinbutleriii 4.0K Jul 2 13:01 marvinbutleriii
+4.0K -rw-rw-rw- 1 marv marv 28 Jul 1 11:55 marv.txt
+0 -rw-r--r-- 1 root root 0 Jul 2 13:05 sys_check.sh
+marvinbutleriii@marvinbutleriii:/home$ sudo vi sys_check.sh
+marvinbutleriii@marvinbutleriii:/home$ cat sys_check.sh
+#!/bin/bash
+echo "Current user is: $(whoami)"
+echo "Current date is: $(date)"
+marvinbutleriii@marvinbutleriii:/home$ ./sys_check.sh
+bash: ./sys_check.sh: Permission denied
+marvinbutleriii@marvinbutleriii:/home$ ls -lsah sys_check.sh
+4.0K -rw-r--r-- 1 root root 78 Jul 2 13:07 sys_check.sh
+marvinbutleriii@marvinbutleriii:/home$ sudo chmod +x sys_check.sh
+marvinbutleriii@marvinbutleriii:/home$ ls -lsah sys_check.sh
+4.0K -rwxr-xr-x 1 root root 78 Jul 2 13:07 sys_check.sh
+marvinbutleriii@marvinbutleriii:/home$ ./sys_check.sh
+Current user is: marvinbutleriii
+Current date is: Thu Jul 2 01:08:38 PM UTC 2026
+marvinbutleriii@marvinbutleriii:/home$ ls
+another-file.txt cool.txt hire.txt marv marvinbutleriii marv.txt sys_check.sh
+marvinbutleriii@marvinbutleriii:/home$ pwd
+/home
+marvinbutleriii@marvinbutleriii:/home$ mv sys_check.sh ~
+mv: cannot move 'sys_check.sh' to '/home/marvinbutleriii/sys_check.sh': Permission denied
+marvinbutleriii@marvinbutleriii:/home$ sudo mv sys_check.sh ~
+marvinbutleriii@marvinbutleriii:/home$ ls
+another-file.txt cool.txt hire.txt marv marvinbutleriii marv.txt
+marvinbutleriii@marvinbutleriii:/home$ cd ~
+marvinbutleriii@marvinbutleriii:~$ ls
+code_arm64.deb Documents Intro Music Public snap Templates
+Desktop Downloads log_simulation Pictures sensitive_data.txt sys_check.sh Videos
+marvinbutleriii@marvinbutleriii:~$ cd /home
+marvinbutleriii@marvinbutleriii:/home$ sys_check.sh
+sys_check.sh: command not found
+marvinbutleriii@marvinbutleriii:/home$ cd ~
+marvinbutleriii@marvinbutleriii:~$ pwd
+/home/marvinbutleriii
+marvinbutleriii@marvinbutleriii:~$ cd /home
+marvinbutleriii@marvinbutleriii:/home$ export PATH=$PATH:/home/marvinbutleriii
+marvinbutleriii@marvinbutleriii:/home$ system_check.sh
+system_check.sh: command not found
+marvinbutleriii@marvinbutleriii:/home$ ls
+another-file.txt cool.txt hire.txt marv marvinbutleriii marv.txt
+marvinbutleriii@marvinbutleriii:/home$ sudo export PATH=$PATH:/home/marvinbutleriii
+sudo: export: command not found
+marvinbutleriii@marvinbutleriii:/home$ cd ~
+marvinbutleriii@marvinbutleriii:~$ ls
+code_arm64.deb Documents Intro Music Public snap Templates
+Desktop Downloads log_simulation Pictures sensitive_data.txt sys_check.sh Videos
+marvinbutleriii@marvinbutleriii:~$ ls -lsah
+total 101M
+4.0K drwxr-x--- 21 marvinbutleriii marvinbutleriii 4.0K Jul 2 13:12 .
+4.0K drwxr-xr-x 4 root root 4.0K Jul 2 13:12 ..
+8.0K -rw------- 1 marvinbutleriii marvinbutleriii 7.7K Jul 2 13:02 .bash_history
+4.0K -rw-r--r-- 1 marvinbutleriii marvinbutleriii 220 Mar 31 2024 .bash_logout
+4.0K -rw-rw-r-- 1 marvinbutleriii marvinbutleriii 1 Jul 2 01:54 .bash_profile
+4.0K -rw-r--r-- 1 marvinbutleriii marvinbutleriii 3.8K Jul 2 12:11 .bashrc
+4.0K drwx------ 16 marvinbutleriii marvinbutleriii 4.0K Jun 28 02:40 .cache
+100M -rw-rw-r-- 1 marvinbutleriii marvinbutleriii 100M Dec 17 2025 code_arm64.deb
+4.0K drwx------ 17 marvinbutleriii marvinbutleriii 4.0K Jun 29 12:14 .config
+4.0K drwxr-xr-x 2 marvinbutleriii marvinbutleriii 4.0K Jun 28 11:29 Desktop
+4.0K drwxr-xr-x 3 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 Documents
+4.0K drwxrwxr-x 3 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 .dotnet
+4.0K drwxr-xr-x 3 marvinbutleriii marvinbutleriii 4.0K Jun 28 00:22 Downloads
+4.0K drwx------ 2 marvinbutleriii marvinbutleriii 4.0K Jun 28 03:12 .gnupg
+4.0K -rw-rw-r-- 1 marvinbutleriii marvinbutleriii 13 Jun 28 11:26 Intro
+4.0K -rw------- 1 marvinbutleriii marvinbutleriii 20 Jul 2 01:07 .lesshst
+4.0K drwx------ 4 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 .local
+4.0K drwxrwxr-x 2 marvinbutleriii marvinbutleriii 4.0K Jun 28 13:45 log_simulation
+4.0K drwxr-xr-x 2 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 Music
+4.0K drwxr-xr-x 2 marvinbutleriii marvinbutleriii 4.0K Jun 28 11:28 Pictures
+4.0K drwx------ 3 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 .pki
+4.0K -rw-r--r-- 1 marvinbutleriii marvinbutleriii 807 Mar 31 2024 .profile
+4.0K drwxr-xr-x 2 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 Public
+0 -rw-rw-rw- 1 marvinbutleriii marvinbutleriii 0 Jun 28 12:30 sensitive_data.txt
+4.0K drwx------ 4 marvinbutleriii marvinbutleriii 4.0K Jun 28 00:22 snap
+4.0K drwx------ 2 marvinbutleriii marvinbutleriii 4.0K Jun 28 11:29 .ssh
+0 -rw-r--r-- 1 marvinbutleriii marvinbutleriii 0 Dec 20 2025 .sudo_as_admin_successful
+4.0K -rwxr-xr-x 1 root root 78 Jul 2 13:07 sys_check.sh
+4.0K drwxr-xr-x 2 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 Templates
+4.0K drwxr-xr-x 2 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 Videos
+4.0K drwxr-xr-x 2 marvinbutleriii marvinbutleriii 4.0K Jun 28 11:29 .vim
+12K -rw------- 1 marvinbutleriii marvinbutleriii 8.2K Jul 2 13:01 .viminfo
+4.0K drwxrwxr-x 4 marvinbutleriii marvinbutleriii 4.0K Dec 20 2025 .vscode
+4.0K -rw-rw-r-- 1 marvinbutleriii marvinbutleriii 214 Dec 20 2025 .wget-hsts
+marvinbutleriii@marvinbutleriii:~$ sudo chown marv:marv sys_check.sh
+marvinbutleriii@marvinbutleriii:~$ ls -lsah sys_check.sh
+4.0K -rwxr-xr-x 1 marv marv 78 Jul 2 13:07 sys_check.sh
+marvinbutleriii@marvinbutleriii:~$ export PATH=$PATH:/home/marvinbutleriii
+marvinbutleriii@marvinbutleriii:~$ sys_check.sh
+Current user is: marvinbutleriii
+Current date is: Thu Jul 2 01:19:05 PM UTC 2026
+marvinbutleriii@marvinbutleriii:~$ vi ~/.bashrc
+
+- Inside that ~/.bashrc file add the command `export PATH=$PATH:/home/marvinbutleriii` at the bottom that way everytime I open a new terminal, the system automatically adds my folder into the path for me.
+
+### Scripts Section:
+
+1. Purpose: What does the script solve?
+
+- I used the sys_check.sh script to tell me 'Current user is: $(whoami)', and 'Current date is: $(date)'.
+
+2. Logic: What commands are inside?
+
+- `!#bin/bash`
+- `echo Current user is: $(whoami)`
+- `echo Current date is: $(date)`
+
+3. Permissions: Did you remember to chmod +x?
+
+- I did use `chmod +x` command to add execution permissions to the user.
+
+4. Refactor: How did you make it better the second time?
+
+- I had to use the `chown` command to change ownership from the root (superuser) to marvinbutleriii because I noticed sudo export didn't work. That is because export is a shell built-in command-it modifies the environment of the current terminal session. Since sudo opens a new process, the export command only affects the temporary root shell, not your nactual working environment.
+- I also ran `system_check.sh` and got a "command not found" error, then realized the file was named `sys_check.sh`. This is a classic real-world debugging case (always look at the filename exactly as it is typed on the disk).
+
+### Emergency Recovery: Broken PATH
+
+- **The Rescue Solution:** If you find yourself in the situation, here is exactly how to fix it:
+
+1. Use the Absolute Path: Since your PATH variable is broken, the shell can't find vi. You need to tell it exactly where the program is instead of vi, run:
+
+- `/usr/bin/vi ~/.bashrc` (this bypass the need for the PATH variable entirely).
+
+2. Fix the typeo: Once vi opens the file, find the typo, correct $PAH to $PATH, and save (:wq).
+3. Reload: You don't need to reboot. Just run:
+
+- `source ~/.bashrc` This forces the shell to re-read the file immediately, fixing your environment variables on the fly.
+
+**The Emergency Backup (If even /usr/bin/vi fails):** If you somehow broke your shell so badly that even absolute paths are acting weird, you have one final "Emergency Key": The Absolute Hardcoded Export.
+
+you can manually set a temporary, working path just for that session by running:
+
+- `export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` This manually overwrites your broken path with a standard, safe one. Once you run that, your `ls` and `vi` commands will magically start working agian, and you can calmly go into your .bashrc and fix the typo.
+
 ### Architect's Decision Log:
 
 - **Date:** 2026-06-25 7:20pm
@@ -571,7 +915,51 @@ ubuntu@first-skink:~/log_simulation$ history | grep "ssh"
 - **Outcome:** Successfully identified "Permission denied" error when `chmod 000` was applied. Resolved by restoring read permissions.
 - **Reflection:** This confirmed how system services might fail if they lack access to critical configuration files.
 
+- **Date:** 2026-7-2
+- **Task:** Environment Configuration
+- **Outcome:** I successfully created and assigned a permanent environment variable to use frequently. Navigated .bashrc and used .bash_profile to write a script and to source .bashrc.
+- **Reflection:**
+
+- **Date:** 2026-7-2
+- **Task:** System Administration
+- **Outcome:** I successfully added a new user with `sudo useradd newtech`, setup user and assigned permissions "rw" with `chmod` command to a new file I added with the new user using `sudo touch hire.txt` command.
+
+- **Date:** 2026-7-2
+- **Task:** I completed the full cycle: Create -> Permissions -> Move -> Pathing -> Execution.
+- **Outcome:** The $PATH realization: I saw the shell looks through a list of directories in order. By using `export PATH=$PATH:/home/marvinbutleriii`, I told the system, "check all the original folders, but if you don't find the command there, also check my home directory".
+
+- Decision:
+- Context:
+- Consequence:
+
 - **Date:**
 - **Task:**
 - **Outcome:**
-- **Reflection:**
+
+- Decision:
+- Context:
+- Consequence:
+
+- **Date:**
+- **Task:**
+- **Outcome:**
+
+- Decision:
+- Context:
+- Consequence:
+
+- **Date:**
+- **Task:**
+- **Outcome:**
+
+- Decision:
+- Context:
+- Consequence:
+
+- **Date:**
+- **Task:**
+- **Outcome:**
+
+- Decision:
+- Context:
+- Consequence:
