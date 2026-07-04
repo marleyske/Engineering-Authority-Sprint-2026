@@ -81,7 +81,7 @@ function getNiceMessage(temp) {
 }
 
 convertTemperature(10, getWarning);
-convertTemperature(80, getNiceMessage);
+convertTemperature(40, getNiceMessage);
 
 /*
 write a function called logFileStatus that:

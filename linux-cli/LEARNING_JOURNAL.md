@@ -245,7 +245,7 @@ Documenting the workflow now ensures that I don't lose time on configuration dur
 3. When used on an existing file, touch updates the file's last modified time without changing the file's contents.
 
 4. Why is the rm command considered dangerous, and what should you be aware of when using it?
-   The rm command is dangerous because it permanently deletes files and directories with no way to recover them. Unlike moving files to a recycle bin, files removed with rm are legitimately gone and cannot be recovered. Using incorrect flags like rm -rf \* or rm -rf / can delete the entire system.
+   The rm command is dangerous because it permanently deletes files and directories with no way to recover them. Unlike moving files to a recycle bin, files removed with rm are legitimately gone and cannot be recovered. Using incorrect flags like `rm -rf *` or `rm -rf /` can delete the entire system.
 
 5. What do the -r and -f flags mean when used with the rm command?
    The -r flag stands for recursive delete and allows you to delete directories and their contents. The -f flag stands for force and prevents the system from prompting for confirmation before deleting each file.
@@ -522,7 +522,11 @@ This script makes sure to source the .bashrc file everytime when using assigned 
 **Topics:**
 **Key Takeaways:**
 
--
+- `ps` command withoug arguments displays only the processes currently running by the current user. The `aux` flag with `ps` allows you to see all processes on the system.
+- PID stads for Process ID, its a uniqe identifier assinged to each running process.
+- To pause the currently running process in the forground and return control to the interactive shell use the command `ctrl + z`.
+- The command `bg 1` sends active process to the background, command `fg 1` sends process in the background to the foreground.
+- Command `sleep [secs] &` runs a sleep process in the bakground the ampersand (`&`) symbol sends processess to the background.
 
 ## Reference Data:
 
@@ -534,7 +538,7 @@ This script makes sure to source the .bashrc file everytime when using assigned 
 2. What is the purpose of the aux flags when used with the ps command?
    The aux flags with the ps command display all processes running on the system by all users, not just the current user's processess. This provides a comprehensive view of everything running on the system.
 
-3. What doe the PID stand for and what is its purpose?
+3. What does the PID stand for and what is its purpose?
    PID stands for Process ID. It is a unique identifier assigned to each running process that allows you to refer to and manage specific processes, such as when using the kill command.
 
 4. What happens when you press Ctrl+Z while a process is running in the foreground?
@@ -544,10 +548,70 @@ This script makes sure to source the .bashrc file everytime when using assigned 
    The bg command resumes a stopped process in the background, allowing you to continue using the shell interactively. The fg command brings a background process to the foreground, displaying its output and blocking the shell until it completes or is stopped.
 
 6. What does the kill -9 command do to a process?
-   Terminates the process
+   Terminates the process (`kill -SIGKILL [PID]` / `kill -9 [PID]`)
 
 7. What does adding an ampersand (&) at the end of a command do?
    Send the command to the background
+
+Reflection: In process `Ctrl+Z` command pauses the current process running in the foregroun. The `ps` command alone with no arguements shows the current running processes running by the current user `ps aux` shows all running processes on the system by all users. `fg` (foreground) command runs the process in the foreground (`fg 1`) `bg` command runs the process in the background (`bg 1`), also the `&` (amperand) runs the command in the background. You can use `kill -9 [PID]` or `kill -SIGKILL [PID]` command to terminate the current running process.
+
+## [2026-7-2] Session Exit Codes & Process Operators:
+
+**Topics:** echo $?, 0, non-zero, &&, ||
+**Key Takeaways:**
+
+- The exit code for a successful process will return 0 in bash and one not successful will return non-zero and will return 130 if you use Ctrl+C command.
+- Command `echo $?` will display the exit code for the most recent executed command.
+- The `&&` operator runs the second command if the first command completes successfully. (first command fails the second wont run).
+`&&` Example: `touch status.txt && date >> status.txt && uptime >> status.txt`
+- The `||` operator runs the second command only if the first command fails.
+
+## Reference Data:
+
+### Lesson Review (Exit Codes & Process Operators):
+
+1. What exit code does a successfully completed process return in bash?
+   A successfully completed process returns an exit code of 0. Any exit code other than 0 indicates that the process did not finish successfully.
+2. How can you check the exit codes of the last executed command in bash?
+   Use the command `echo $?` to display the exit code of the most recently executed command.
+3. What does an exit code of 1 typically indicate in bash?
+   Exit code 1 typically indicates that there was an error of some variety and the program did not finish successfully.
+4. What does the && operator do when chaining bash commands?
+   The `&&` operator runs the second command only if the first command completes successfully (returns exit code 0). If the first command fails, the second command will not execute.
+5. What is the difference between using `&&` and `||` operators in bash?
+   `false && echo "first"` (won't print)
+   `false || echo "second"` (will print)
+   The `&&` operator runs the next command only if the previous command succeeds (returns 0). The `||` operator runs the next command only if the previous command fails (returns non-zero). In the example, "first" wont print but "second" will print.
+6. What does the exit code 130 typically indicate?
+   The user terminated the process with `Ctrl+c`.
+
+Reflection: For exit codes and process operators a successfull exit code returns 0 and otherwise non-zero for a non-successful one. Checking the last executed command exit code you use `echo $?`. The `&&` operater returns the second command only if the first is true and the `||` operator returns the second command only if the first is false. Lastly, `Ctrl+C` command terminates the current running process.
+
+## [2026-7-2] Session Subcommands:
+
+**Topics:**
+**Key Takeaways:**
+
+- 
+
+## Reference Data:
+
+### Lesson Review (Subcommands):
+
+1. What is the syntax for executing a subcommand in bash?
+Use the dollar sign followed by parentheses: $(command). For example, echo "Current user is $(whoami)" will execute the whoami command and include its output in the echo statement.
+2. How does a subcommand work in bash?
+A subcommand executes a separate command and returns whatever that command ouputs to standard out. The returned value is then inserted into the parent command at that position.
+3. What is the older syntax for subcommands in bash, and why should it be avoided?
+Backticks (`) are the older syntax for subcommands. The dollar sign parentheses syntax $(command) should be preferred becausse it allows nesting multiple subcommands, is less ambiguous, easier to read, and provides more options.
+4. How can you append output to a file using the echo command with subcommands? For example, to log both date and uptime
+Use the >> operator with subcommands. For example:
+`echo $(date +%x) - $(uptime) >> log.txt`
+This will execute both date and uptime commands and append their output to log.txt.
+5. In the ps aux command output, what information do the CPU and %MEM colums provide?
+The CPU column shows the percentage of CPU usage for each process, and %MEM shows the percent of memory usage. These columns can be sorted to identify processes that ar consuming excessive resources.
+6. What configuration file is always rea when you log into a new bash session?
+`.bashrc`
 
 Reflection:
 
@@ -871,7 +935,7 @@ marvinbutleriii@marvinbutleriii:~$ vi ~/.bashrc
 
 2. Logic: What commands are inside?
 
-- `!#bin/bash`
+- `!#/bin/bash`
 - `echo Current user is: $(whoami)`
 - `echo Current date is: $(date)`
 
@@ -903,12 +967,15 @@ you can manually set a temporary, working path just for that session by running:
 
 - `export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin` This manually overwrites your broken path with a standard, safe one. Once you run that, your `ls` and `vi` commands will magically start working agian, and you can calmly go into your .bashrc and fix the typo.
 
-### The Hidden Secret: /etc/skel
+### Default Configuration Files (etc/skel "skeleton"):
+
+The Hidden Secret: /etc/skel
 
 when use `useradd`, the system doesn't just create an empty folder. It looks at a special directory called /etc/skel (short for "skeleton"). This directory contains all the default configuration files (like `.bashrc`, `.profile`, `.bash_logout`) that a new user should have.
+
 - Why it's missing for `newtech`: When you ran `sudo useradd newtech` without the -m flag, you prevented the system from copying those skeleton files into the new user's home folder. That is why `newtech` doesn't have a `.bashrc` file yet-it was never "born" with the defult set.
-- The "Manual" Fix: Because you created the directory manully with `mkdir`, you now have a "blank slate." To give `newtech` the same environment you have, you can ocpy the defaults over:
-- `sudo cp /etc/skel/.bashrc /home/newteck/`
+- The "Manual" Fix: Because you created the directory manully with `mkdir`, you now have a "blank slate." To give `newtech` the same environment you have, you can copy the defaults over:
+- `sudo cp /etc/skel/.bashrc /home/newtech/`
 - `sudo cp /etc/skel/.profile /home/newtech/`
 - `sudo chown newtech:newtech /home/newtech/.bashrc /home/newtech/.profile`
 
@@ -942,8 +1009,9 @@ when use `useradd`, the system doesn't just create an empty folder. It looks at 
 - Consequence:
 
 - **Date:** 2026-7-2
-- **Task:** Fixing Missing Shell Configurations.
+- **Task:** Fixing Missing Shell onfigurations"
 - **Outcome:** I now understand the "User Creation Lifecycle":
+
 1. Account Registration: Updating `/etc/passwd`.
 2. Environment Providioning: Creating the directory (`mkdir`).
 3. Skeleton Copying: Populating the directory with defaults from `/etc/skel`.
@@ -976,4 +1044,3 @@ when use `useradd`, the system doesn't just create an empty folder. It looks at 
 - Decision:
 - Context:
 - Consequence:
-

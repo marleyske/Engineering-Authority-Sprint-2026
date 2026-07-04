@@ -1,1 +1,5 @@
-.env.local
+# misc
+.DS_Store
+
+# env files
+.env*
