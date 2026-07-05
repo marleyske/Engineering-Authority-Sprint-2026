@@ -563,7 +563,7 @@ Reflection: In process `Ctrl+Z` command pauses the current process running in th
 - The exit code for a successful process will return 0 in bash and one not successful will return non-zero and will return 130 if you use Ctrl+C command.
 - Command `echo $?` will display the exit code for the most recent executed command.
 - The `&&` operator runs the second command if the first command completes successfully. (first command fails the second wont run).
-`&&` Example: `touch status.txt && date >> status.txt && uptime >> status.txt`
+  `&&` Example: `touch status.txt && date >> status.txt && uptime >> status.txt`
 - The `||` operator runs the second command only if the first command fails.
 
 ## Reference Data:
@@ -592,28 +592,85 @@ Reflection: For exit codes and process operators a successfull exit code returns
 **Topics:**
 **Key Takeaways:**
 
-- 
+-
 
 ## Reference Data:
 
 ### Lesson Review (Subcommands):
 
 1. What is the syntax for executing a subcommand in bash?
-Use the dollar sign followed by parentheses: $(command). For example, echo "Current user is $(whoami)" will execute the whoami command and include its output in the echo statement.
+   Use the dollar sign followed by parentheses: $(command). For example, echo "Current user is $(whoami)" will execute the whoami command and include its output in the echo statement.
 2. How does a subcommand work in bash?
-A subcommand executes a separate command and returns whatever that command ouputs to standard out. The returned value is then inserted into the parent command at that position.
+   A subcommand executes a separate command and returns whatever that command ouputs to standard out. The returned value is then inserted into the parent command at that position.
 3. What is the older syntax for subcommands in bash, and why should it be avoided?
-Backticks (`) are the older syntax for subcommands. The dollar sign parentheses syntax $(command) should be preferred becausse it allows nesting multiple subcommands, is less ambiguous, easier to read, and provides more options.
+   Backticks (`) are the older syntax for subcommands. The dollar sign parentheses syntax $(command) should be preferred becausse it allows nesting multiple subcommands, is less ambiguous, easier to read, and provides more options.
 4. How can you append output to a file using the echo command with subcommands? For example, to log both date and uptime
-Use the >> operator with subcommands. For example:
-`echo $(date +%x) - $(uptime) >> log.txt`
-This will execute both date and uptime commands and append their output to log.txt.
+   Use the >> operator with subcommands. For example:
+   `echo $(date +%x) - $(uptime) >> log.txt`
+   This will execute both date and uptime commands and append their output to log.txt.
 5. In the ps aux command output, what information do the CPU and %MEM colums provide?
-The CPU column shows the percentage of CPU usage for each process, and %MEM shows the percent of memory usage. These columns can be sorted to identify processes that ar consuming excessive resources.
+   The CPU column shows the percentage of CPU usage for each process, and %MEM shows the percent of memory usage. These columns can be sorted to identify processes that ar consuming excessive resources.
 6. What configuration file is always rea when you log into a new bash session?
-`.bashrc`
+   `.bashrc`
 
 Reflection:
+
+## [2026-7-5] Session SSH & Secondary Machine:
+
+**Topic:** Building a Multi-Node Vurtualized Lab (UTM/Linux):
+**Key Takeaways:**
+
+-
+
+1. The Challenge:
+   **Goal:** Create a two-node Linux environment for an "SSH & Secondary Machine" lsesson.
+   **Roadblock:** Multipass daemon failures required a pivot to UTM VMs.
+   **Network Obstacle:** VMs were "air-gapped" (Connection Failed error), preventing internal communication and SSH access.
+2. Troubleshooting Process
+   **Network Diagnosis:**
+
+- Initial attempt at "Shared" network mode railed to provide an IPV4 address.
+- Switched to "Bridged" mode to allow the VM to request an IP directly from the physical router.
+- Encountered an IP collision (MAC address conflict) when cloning the second VM.
+  **Resolution Steps:**
+  1.  **MAC Address:** Generated unique MAC addresses from each VM in UTM settings to stop IP conflicts.
+  2.  **Network Reset:** Used `nmcli networking off` and `nmcli networking on` to force the VM to request a fresh IP via DHCP.
+  3.  **Verification:** Confirmed unique IP addresses usign `ip addr`.
+  4.  **Service Setup:** Installed and enabled `openssh-server` on both nodes.
+
+3. Key Concepts Learned
+   **Infrastructure as Code (Mental Model):** Realized that virtualization platforms (like Multipass) are "magic", but learning to manually configure networking (DHCP, `nmcli`, `ip addr`) is essential for real-world server administration.
+   **SSH Fingerprints:** Learned that SSH host key warnings are security features to prevent man-in-the-middle attacks.
+   **Standardization:** Implemented hostnaming convetions (node1, node2) to ensure safety and clarity. Using `hostnamectl` and updating `/etc/hosts` (`sudo nano /etc/hosts` add this line to file `127.0.0.1 node2`), ensures that the OS correctly identifies itself, reducing the risk of accidental commands being run on the wrong server.
+
+4. Technical Commands Mastered
+
+- `ip addr`: View network interface status and IP assignment.
+- `nmcli networking [on/off]`: Manage network connectivity status.
+- `hostnamectl set-hostname <name>`: Define unique server identities.
+- `sudo apt install openssh-server`: Configure the "doorman" for remote access.
+- `ssh user@<IP>`: Establish secure, encrypted remote shell access.
+
+5. Takeaways for Future Modules
+
+- Always verify network connectivity _before_ attempting SSH.
+- Standardize naming conventions early to prevent confusion.
+- "Command not found" is not a wall; it's a hint-use the shell's output to find the missing package.
+
+## Reference Data:
+
+### Lesson Review (SSH & Secondary Machine):
+
+1. What does SSH stand for and what is it's primary purpose?
+   SSH stands for Secure Shell. It allows you to connect from one computer to another computer and remotely execute commands on a different computer.
+2. What version control system uses SSH underneath the hood?
+   Git uses SSH underneath the hood for connections.
+3. What command is used to creat a new virtual machine named 'secondary' using mulitpass?
+   The command is `multipass launch name secondary`. This creates a second VM on your computer.
+4. What is the purpose of the `-s` flag when using the `useradd` command?
+   The `-s` flag specifies the default shell for the new user. for example, `-s /bin/bash` sets bash as the user's shell instead of the default dash shell.
+5. When creating a user with `useradd`, what does the `-m` flag do?
+   The `-m` flag creates a home folder for the user automatically, so you don't have to create it manually.
 
 ### 1. The "Triage & Rescue" Lab (Simulation)
 
@@ -935,7 +992,7 @@ marvinbutleriii@marvinbutleriii:~$ vi ~/.bashrc
 
 2. Logic: What commands are inside?
 
-- `!#/bin/bash`
+- `#!/bin/bash`
 - `echo Current user is: $(whoami)`
 - `echo Current date is: $(date)`
 
@@ -945,7 +1002,7 @@ marvinbutleriii@marvinbutleriii:~$ vi ~/.bashrc
 
 4. Refactor: How did you make it better the second time?
 
-- I had to use the `chown` command to change ownership from the root (superuser) to marvinbutleriii because I noticed sudo export didn't work. That is because export is a shell built-in command-it modifies the environment of the current terminal session. Since sudo opens a new process, the export command only affects the temporary root shell, not your nactual working environment.
+- I had to use the `chown` command to change ownership from the root (superuser) to marvinbutleriii because I noticed sudo export didn't work. That is because export is a shell built-in command-it modifies the environment of the current terminal session. Since sudo opens a new process, the export command only affects the temporary root shell, not your actural working environment.
 - I also ran `system_check.sh` and got a "command not found" error, then realized the file was named `sys_check.sh`. This is a classic real-world debugging case (always look at the filename exactly as it is typed on the disk).
 
 ### Emergency Recovery: Broken PATH
@@ -974,7 +1031,7 @@ The Hidden Secret: /etc/skel
 when use `useradd`, the system doesn't just create an empty folder. It looks at a special directory called /etc/skel (short for "skeleton"). This directory contains all the default configuration files (like `.bashrc`, `.profile`, `.bash_logout`) that a new user should have.
 
 - Why it's missing for `newtech`: When you ran `sudo useradd newtech` without the -m flag, you prevented the system from copying those skeleton files into the new user's home folder. That is why `newtech` doesn't have a `.bashrc` file yet-it was never "born" with the defult set.
-- The "Manual" Fix: Because you created the directory manully with `mkdir`, you now have a "blank slate." To give `newtech` the same environment you have, you can copy the defaults over:
+- The "Manual" Fix: Because you created the directory manually with `mkdir`, you now have a "blank slate." To give `newtech` the same environment you have, you can copy the defaults over:
 - `sudo cp /etc/skel/.bashrc /home/newtech/`
 - `sudo cp /etc/skel/.profile /home/newtech/`
 - `sudo chown newtech:newtech /home/newtech/.bashrc /home/newtech/.profile`
