@@ -160,3 +160,163 @@ function showResult(data) {
 
 // The Run
 addTen(5, showResult);
+
+// SCOPE LESSON:
+
+/*
+1. Global Scope (The Public Lobby)
+If you declare a variable outside of any function, it is global. Everyone can see it.
+
+let coffeeLevel = 100; // Global variable
+
+function checkCoffee() {
+  console.log(coffeeLevel); // Yes, it can see it.
+}
+
+
+2. Function Scope (The Secure Room)
+If you declare a variable inside a function, it is trapped in that room. No one outside can see it.
+
+
+function secureRoom() {
+  let secretCode = "1234";
+  console.log(secretCode); // Works!
+}
+
+console.log(secretCode); // Error! This code is outside the room.
+
+
+3. Nested Scope (The "Parent-Child" Relationship)
+This is where the magic (and the confusion) happens. A function inside a function can see its own variables plus its parent's variables.
+
+
+function parent() {
+  let parentVar = "I am the parent";
+  
+  function child() {
+    let childVar = "I am the child";
+    console.log(parentVar); // The child can "reach up" and see the parent!
+  }
+}
+*/
+
+/*
+Practice Exercise: CLOSURE
+Create a function called createGreeter that:
+
+Takes a greeting parameter (like "Hello" or "Hi")
+Returns a function that takes a name parameter
+The returned function should log the greeting + name
+*/
+
+function createGreeter(greeting) {
+  return (name) => {
+    console.log(greeting + " " + name);
+  };
+}
+const sayHello = createGreeter("Hello");
+const sayHi = createGreeter("Hi");
+
+sayHello("Marvin"); // "Hello Marvin"
+sayHi("Leo"); // "Hi Leo"
+
+function createCounter() {
+  let count = 0;
+  return () => {
+    count++;
+    console.log(count);
+  };
+}
+
+const myCounter = createCounter();
+myCounter();
+myCounter();
+
+/*
+Practice Exercise: The "Vault Access"
+Your goal is to write a function createAccessCard that holds a userLevel. It should return a function that, when called, checks if a person is allowed to enter.
+
+Syntax Pattern to practice:
+
+Outer function: Takes the initial data (the "stuff" to remember).
+
+Inner function: Uses that data to make a decision.
+*/
+
+function createAccessCard(userLevel) {
+  // 1. The ourter function holds the "userLevel" in its scope.
+
+  return (requiredLevel) => {
+    // 2. The inner function reaches out to see the "userLevel"
+    // and compares it to the "requiredLevel"
+
+    if (userLevel >= requiredLevel) {
+      console.log("Access Granted");
+    } else {
+      console.log("Access Denied");
+    }
+  };
+}
+
+// Now we create two different "cards"
+const adminCard = createAccessCard(5);
+const guestCard = createAccessCard(1);
+
+adminCard(3); // "Access Granted" (because 5 >= 3)
+guestCard(3); // "Access Denied" (because 1 < 3)
+
+/*
+The "Temperature Gauge"
+Write a function called createThermometer that takes a baseTemp (the starting temperature).
+
+The returned function should take a newTemp and log whether it is Hotter or Colder than the baseTemp.
+
+Try to write this code. Don't worry if you get the syntax wrong—just try to get the "Outer" and "Inner" structure in place. How would you start this?
+*/
+
+function createThermometer(baseTemp) {
+  return (newTemp) => {
+    // If baseTemp (88) is higher than newTemp (79), it got COLDER.
+    if (baseTemp > newTemp) {
+      console.log("It's Colder");
+    } else {
+      console.log("It's Hotter");
+    }
+  };
+}
+
+const summerDay = createThermometer(88);
+const winterDay = createThermometer(62);
+
+summerDay(79); // 88 > 79 so it logs: "It's Colder"
+winterDay(45); // 62 > 45 so it logs: "It's Colder"
+winterDay(75); // 62 < 75 so it logs: "It's Hotter"
+
+/*
+Challenge: The "Inventory System"
+You are back at the auto shop. You want to create a function createInventoryManager that remembers the itemName and the stockCount.
+
+The Goal:
+
+The outer function should take two inputs: itemName and initialStock.
+
+The returned function should take a number to sell.
+
+It should subtract that number from the stock and log: "Sold [number] [itemName]. Remaining: [stockCount]".
+*/
+
+function createInventoryManager(itemName, initialStock) {
+  // 1. We keep the data here in the "Manager's Office"
+  let stock = initialStock;
+  
+  // 2. The inner function "closes over" the variables 'stock' and 'itemName'
+  return (amountToSell) => {
+    stock = stock - amountToSell; 
+    console.log("Sold " + amountToSell + " " + itemName + ". Remaining: " + stock);
+  };
+}
+
+const oilFilterManager = createInventoryManager("Oil Filters", 50);
+
+oilFilterManager(5);
+oilFilterManager(10);

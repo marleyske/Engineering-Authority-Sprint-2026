@@ -64,12 +64,36 @@ addTen(5, showResult);
   Function Scope; is created whenever you define a function. A function scope is very similar to a block scope, but some JavaScript features use function scope insted of block scope.
   Nested Scope; you can have multiple levels of scope.
 
+  ### The Mental Model (Architectural Visualiztion):
+
+- **The "Missing Link" (Why I struggled):**
+- The reason Closures are hard is because they break the standard "secure room" rule.
+
+- Normally, when a function finishes running, all its variables (like parentVar) should be deleted/cleared out (like clearing a room at the end of a shift).
+
+- But, if a child function is still alive, JavaScript realizes: "Wait! The child still needs parentVar to do its job. I won't delete it." It keeps that variable in a "special storage" instead of deleting it. That "special storage" is the Closure.
+
 - **Aha! Moment:**
 
 - Scope is like One-Way mirrors that always look outward. Outward scopes cannot see inner scopes.
 - Naming conflict: You can have variables with the same name in different scopes without conflict.
 - JavaScript starts with the current scope and works outward.
 - Don't use the same name for different variables in nested scopes.
+
+## Code Labritory:
+
+Based on the rules above, which variables do you think `inner()` has access to? `ALL`
+
+let globalVar = "Global";
+
+function outer() {
+  let outerVar = "Outer";
+  
+  function inner() {
+    let innerVar = "Inner";
+    // Which of these can inner() see?
+  }
+}
 
 ## Reference Data:
 
