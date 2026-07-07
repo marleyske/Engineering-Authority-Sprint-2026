@@ -15,7 +15,7 @@ Now, create two callbacks:
 exclaimIt: Takes the text and adds "!!!" to the end.
 
 questionIt: Takes the text and adds "???" to the end.
-*/
+
 
 function formatMessage(text, callback) {
   const upperText = text.toUpperCase();
@@ -36,7 +36,7 @@ formatMessage("how are you", questionIt);
 /*
 Create a function doubleNumber(num, callback) that converts a number to a string using 
 .toString() and then passes it to a callback that adds the word " total" to the end.
-*/
+
 
 function doubleNumber(num, callback) {
   const convertNumber = num.toString();
@@ -65,7 +65,7 @@ Now, create two callbacks:
 getWarning: Takes the fahrenheit temperature and returns it with a string: "It is [temp] degrees, wear a coat!"
 
 getNiceMessage: Takes the fahrenheit temperature and returns it with a string: "It is [temp] degrees, enjoy the weather!"
-*/
+
 
 function convertTemperature(celsius, callback) {
   const fahrenheit = (celsius * 9) / 5 + 32;
@@ -93,7 +93,7 @@ Uses a callback to format the output.
 The Goal: Return a string that looks like this: [FILE STATUS]: fileName.
 
 Example: logFileStatus("system.log", "Error") should return [ERROR]: system.log (hint: use .toUpperCase() again!).
-*/
+
 
 function logFileStatus(fileName, status, callback) {
   const formattedStatus = status.toUpperCase();
@@ -115,7 +115,7 @@ Checks if the user is "admin".
 Passes true or false to the callback.
 
 The callback should return: "Access Denied" or "Access Granted".
-*/
+
 
 function checkPermission(user, callback) {
   const isAuthorized = user === "admin";
@@ -207,7 +207,7 @@ Create a function called createGreeter that:
 Takes a greeting parameter (like "Hello" or "Hi")
 Returns a function that takes a name parameter
 The returned function should log the greeting + name
-*/
+
 
 function createGreeter(greeting) {
   return (name) => {
@@ -241,7 +241,7 @@ Syntax Pattern to practice:
 Outer function: Takes the initial data (the "stuff" to remember).
 
 Inner function: Uses that data to make a decision.
-*/
+
 
 function createAccessCard(userLevel) {
   // 1. The ourter function holds the "userLevel" in its scope.
@@ -272,7 +272,7 @@ Write a function called createThermometer that takes a baseTemp (the starting te
 The returned function should take a newTemp and log whether it is Hotter or Colder than the baseTemp.
 
 Try to write this code. Don't worry if you get the syntax wrong—just try to get the "Outer" and "Inner" structure in place. How would you start this?
-*/
+
 
 function createThermometer(baseTemp) {
   return (newTemp) => {
@@ -303,7 +303,7 @@ The outer function should take two inputs: itemName and initialStock.
 The returned function should take a number to sell.
 
 It should subtract that number from the stock and log: "Sold [number] [itemName]. Remaining: [stockCount]".
-*/
+
 
 function createInventoryManager(itemName, initialStock) {
   // 1. We keep the data here in the "Manager's Office"
@@ -320,3 +320,4 @@ const oilFilterManager = createInventoryManager("Oil Filters", 50);
 
 oilFilterManager(5);
 oilFilterManager(10);
+*/

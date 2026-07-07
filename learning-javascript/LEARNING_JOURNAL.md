@@ -87,12 +87,12 @@ Based on the rules above, which variables do you think `inner()` has access to? 
 let globalVar = "Global";
 
 function outer() {
-  let outerVar = "Outer";
-  
-  function inner() {
-    let innerVar = "Inner";
-    // Which of these can inner() see?
-  }
+let outerVar = "Outer";
+
+function inner() {
+let innerVar = "Inner";
+// Which of these can inner() see?
+}
 }
 
 ## Reference Data:
@@ -126,7 +126,7 @@ Minimize the use of global scope as much as possible. Variables in global scope 
 ## The "Why" (The Concept):
 
 - **Core Logic:**
-- Hoisting is a JavaScript behavior where function declarations are moved to the top of their scope during compilation. This allows you to use functions before they;re defined in your code.
+- Hoisting is a JavaScript behavior where function declarations are moved to the top of their scope during compilation. This allows you to use functions before they're defined in your code.
 - Normally, JavaScript executes code from top to bottom. However, functions work differently. You can call a function before it's defined.
 - Before JS runs your code, it does a preliminary scan and moves all function declarations to the top of their scope.
 - Functions are either hoisted to the top of the global scope or the top of their containing function scopre, depending on where they are defined.
@@ -177,9 +177,163 @@ It allows important code to be placed at the top of a file while helper function
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
+### Lesson Review (Closures):
 
-# Session [2026-7-3] []:
+1. What is a closure in JavaScript?
+   A closure is what happens when an inner function accesses variables in a scope outside of it. It's essentially how scope works for functions - a function that looks outward to see other scope inside of it.
+2. When a closure references a dynamic variable from an outer scope, which value does it use?
+   For example:
+
+let a = 1/
+
+function print() {
+
+console.log(a);
+}
+
+a = 2;
+
+print();
+
+The closure uses the most up-to-date value of the variable at the time the function is called. In this example, it would log 2 because that's the current value of 'a' when print() is executed. 3. What will the following code output?
+function(a) {
+
+function inner(b) {
+
+    condole.log(a, b);
+
+}
+
+return inner;
+
+}
+
+const newFunc = outer(1);
+
+newFunc(2);
+
+It will output: 1 2
+the inner function remembers the value of 'a' (which is 1) from when outer was called, and recieves 'b' (which is 2) when new Func is called. 4. Can a function inside another function access variable from multiple outer scope layers?
+Yes, a nested function can access variables from all outer scope layers. It can access global variables, variables from its immediate outer function, and variables from any other outer functions in the scope chain, always looking outward. 5. What would the following code return?
+
+function createGreeter(greeting) {
+
+return function(name) {
+
+};
+
+}
+
+const sayHello = createGreeter('Hello');
+
+sayHello(Kyle');
+
+It would return 'Hello Kyle'. The returned function remembers the 'greeting' parameter ('Hello') from the outer function and combines it with the 'name parameter ('Kyle') passed to the inner function.
+
+6. What happens to variables from an outer function when an inner function is returned in JavaScript?
+   The inner function remembers and keeps track of the outer function's variables.
+
+7. In a closure with nested functions, how many scope layers can an inner function access?
+   As many levels nested outward as exist.
+
+# Session [2026-7-3] [Creating Variables with var]:
+
+## The "Why" (The Concept):
+
+- **Core Logic:**
+
+- var is like telling your roomate "I'm going to buy milk" but not buying it yet. When they go to the fridge, they find it empty-they don't know if you forgot or havent't gone to the store yet.
+
+- let is like keeping the milk in a locked box until you've actually put it in the fridge. If they try to open the box while it's empty, you stop them immediately.
+
+# JavaScript Learning Journal: Scope, Variables, and Functions
+
+This journal tracks key concepts regarding how JavaScript handles data, scoping, and execution flow.
+
+## 1. Variables and Declarations
+
+- `var`: The "wild west" of declarations. Function-scoped, can be re-declared, and is hoisted with an `undefined` value. Avoid in modern code.
+- `let`: Block-scoped. Cannot be re-declared in the same scope. Allows re-assignment.
+- `const`: Block-scoped. Cannot be re-declared or re-assigned. Used for fixed values.
+
+### Key Distinction
+
+- **Re-declaring:** Using the same name twice (e.g., `let x = 1; let x = 2;`). Forbidden with `let` and `const`.
+- **Re-assigning:** Changing the value of an existing variable (e.g., `x = 2;`). Forbidden with `const`.
+
+## 2. Scope
+
+Scope defines where a variable is "visible" or "accessible."
+
+- **Global Scope:** Variables declared outside any function or block. Accessible everywhere.
+- **Function Scope:** Variables declared inside a function are only accessible within that function.
+- **Block Scope (`let`/`const`):** Variables exist only within the curly braces `{ }` where they were defined (e.g., `if` statements, loops).
+
+### The Scope Chain
+
+When a variable is requested, JavaScript looks:
+
+1. In the current local scope.
+2. In the parent scope.
+3. Up to the global scope.
+   _Functions can look "out," but parents cannot look "in" to child scopes._
+
+## 3. Hoisting
+
+JavaScript scans code for declarations (`var`) before execution.
+
+- `var` declarations are "hoisted" to the top, but they are initialized as `undefined`.
+- `let` and `const` are hoisted but remain in a "Temporal Dead Zone"—accessing them before declaration causes a `ReferenceError`.
+
+## 4. Functions and Data Flow
+
+- **Parameters:** Variables passed into a function create local "buckets" for the function's use.
+- **Return Values:** If you don't "catch" the result of a function with a variable (e.g., `let result = myFunc();`), the returned value is discarded.
+- **Global Hijack:** If you assign a value to a variable name without declaring it (`x = 10` inside a function), JavaScript looks up the scope chain and modifies the global variable instead of creating a local one.
+
+## 5. Asynchronous Behavior
+
+- **`setTimeout`:** A way to schedule code for the future. It places tasks on a "Wait List" rather than executing them immediately.
+- **Loop Timing:** Loops execute instantly. By the time scheduled functions (like `setTimeout`) run, the variables they access may have already changed (e.g., `i` reaching its final value).
+
+## 6. Closure ("The Vault")
+
+- **Definition:** An inner function "remembers" the environment (variables) in which it was created, even after the parent function finishes.
+- **Encapsulation:** By trapping a variable inside a function scope, you create a private variable that cannot be accessed or modified directly from the outside.
+- **Gatekeepers:** Access is controlled through returned functions (like `add` or `reset`), creating a secure, private data structure.
+
+## 7. Summary Cheat Sheet
+
+| Concept | Can Re-declare? | Can Re-assign? | Scope    |
+| :------ | :-------------- | :------------- | :------- |
+| `var`   | Yes             | Yes            | Function |
+| `let`   | No              | Yes            | Block    |
+| `const` | No              | No             | Block    |
+
+---
+
+_Studied concepts: Variable declarations, function scope, scope chain, hoisting, return values, asynchronous timing, closures, and encapsulation._
+
+# Session [2026-6-7] [Type Coercion]:
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review (Type Coersion):
+
+1. What is the difference between explicit and implicit type coercion in JavaScript?
+   Explicit type coercion is when the programmer directly tells JavaScript to change a variable to another type. Implicit type coercion is when JavaScript automatically cnverts types behind the scenes without the programmer explicitly requesting it.
+2. What is the difference between `parseInt()` and `parseFloat()` in JavaScript?
+   `parseInt()` converts a string to a whole number (integer) and removes any decimal portion. `parseFloat()` converts a string to a number that preserves decimal points (floating point number). For example, `parseInt('1.3')` returns `1`, while `parseFloat('1.3')` returns `1.3`.
+3. How do subtraction and multiplication operators handle type coercion differently than the addition operator when working with a number and a string?
+   Ulike addition, subtraction and multiplication covert strings to numbers before performing the operation. For example, `3 - '1'` converts the string `'1'` to the number `1` and returns `2`. Similarly, `3 * '1'` returns `3`. The addition operator converts to strings instead.
+4. How can you convert any value to a string in JavaScript?
+   You can use the `toString()` function, which is available on every value in JavaScript. For example, `(1.34).toString()` converts the number `1.34` to the string `'1.34'`.
+5. What is type coercion in JavaScript?
+   Coverting one data type to another type, such as a number to a string or a string to a number.
+
+# Session [2026-7-6] [NaN]:
 
 ## The "Why" (The Concept):
 
@@ -189,33 +343,24 @@ It allows important code to be placed at the top of a file while helper function
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
+### Lesson Review (NaN):
 
-# Session [2026-7-3] []:
+1. What does the `parseInt()` function return when passed a string that contains no numbers, such as "hello"?
+   `parseInt()` returns NaN (Not a Number), which is a special reserved keyword in JavaScript that represents a value that cannot be converted to a valid number.
+2. What does the `typeof` operator return when applied to `NaN`?
+   The `typeof` operator returns "number" when applied to `NaN`, even though NaN stands for "not a number". This is because NaN represents an attempt to creat a number that failed, so it still has the type of number.
+3. What is the result of comparing NaN to itself using the equality operator (e.g., NaN == NaN)?
+   The comparison returns false. In JavaScript, NaN is never equal to anything, including itself. This is a hardcoded behavior in the language.
+4. How can you properly check if a value is `NaN` in JavaScript?
+   You must use `isNaN()` function. this function returns `true` if the value is `NaN` and `false` if it is a valid number. You cannot use equality operators because `NaN` is never equal to anything, including itself.
+5. Given the following code, what will be the output?
+   const a = parseInt("hello");
+   const b = 5;
+   console.log(isNaN(a)); // true
+   console.log(isNaN(b)); // false
+   The first `isNaN(a)` returns true becaues a is NaN (result of parsing "hello"). The second `isNaN(b)` returns false because b is a valid number (5).
 
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
-
-### Reference Data:
-
-### Lesson Review (Hoisting):
-
-# Session [2026-7-3] []:
-
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
-
-### Reference Data:
-
-### Lesson Review (Hoisting):
-
-# Session [2026-7-3] []:
+# Session [2026-7-3] [Equality Type Comparison]:
 
 ## The "Why" (The Concept):
 
@@ -225,9 +370,24 @@ It allows important code to be placed at the top of a file while helper function
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
+### Lesson Review (Equality Type Comparison):
 
-# Session [2026-7-3] []:
+1. What is the difference between double equals (==) and triple equals (===) in JavaScript when comparing values?
+   Double equals (==) perfoms immplicit type coercion before comparison, converting values to the same type if they're different. Triple equals (===) performs a strict equality check that first checks if the types are the same, and if they're not, it immediately returns false without any type coercion.
+2. What result does the following comparison return in JavaScript and why?
+   1 == "1" // true
+   This returns true because the double equals operator performs type coercion. JavaScript converts the string "1" into the number 1 before doing the comparison, so both values become the number 1.
+3. What are falsy values in JavaScript, and which specific values invovling zero and strings are mentioned as examples?
+   Falsy values are values that evaluate to false when converted to a boolean. The number 0 and empty strings are considerd falsy values in JavaScript. When compared to false using double equals, they return true because they are converted to the boolean false.
+4. What is the recommended approach for equality comparisons in JavaScript, and what is the one exception to this rule?
+   The recommended approach is to always use strict equality (===) or strict inequality (!==) to avoid confusing type coercion behavior. The one exception is when comparing null and undefined, where double equals (==) is useful because it treats them as equal, allowing a single check for both values instead of needing separate checks.
+5. What result does the following comparison return and why?
+   let a = null;
+   a == undefined
+   // true
+   This returns true because double equals performs type coercion and treats null and undefined as equal since they both represent "not a value." However, if using triple equals (===). this would return false because null and undefined are technically different types.
+
+# Session [2026-7-6] [Arrays]:
 
 ## The "Why" (The Concept):
 
@@ -237,9 +397,30 @@ It allows important code to be placed at the top of a file while helper function
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
+### Lesson Review (Arrays):
 
-# Session [2026-7-3] []:
+1. In JavaScript, how do you create an empty array?
+   You create an empty array using empty square brackets: `[]`. For example: `const myArray = [];`
+2. What index number is used to access the first element in a JavaScript array, and why?
+   The index number 0 is used to access the first element because JavaScript arrays are zero-indexed, meaning they start counting from 0 rather than 1. So the first element is a index 0, the second at index 1, and so on.
+3. What method is used to add a new element to the end of an array in JavaScript?
+   const names = ['Kyle', 'Sarah'];
+   // Add 'John' to the end
+   The `push()` method is used to add a new element to the end of an array. For example:
+   `names.push('John');` will add 'John' to the end of the array, making it `['Kyle', 'Sarah', 'John']`.
+4. How would you access the letter 'C' from this nested array?
+   const grid = [
+   [1, 2, 3],
+   [4, 5, 6,],
+   ['A', 'B', 'C']
+
+];
+console.log(grid[2][2])
+You would use `grid[2][2]` to access the letter 'C'. The first `[2]` accesses the third row (the array containing 'A', 'B', 'C'), and the second `[2]` accesses the third element in that row, which is 'C'. 5. How do you determine the number of elements in a JavaScript array?
+You use the `length` property of the array. for example, if you have `const myArray = ['A', 'B'];`, then `myArray.length` will return `2`, indicating there are 2 elements in the array. 6. How do you create an empty array in JavaScript?
+Using empty square brackets: [].
+
+# Session [2026-7-6] [Objects]:
 
 ## The "Why" (The Concept):
 
@@ -249,11 +430,120 @@ It allows important code to be placed at the top of a file while helper function
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
+### Lesson Review (Objects):
 
-# Session [2026-7-3] []:
+1. What is the primary difference between arrays and objects in JavaScript?
+Arrays are used for storing a list of data that starts at a point and ends at a point, while objects are used for storing a collection of data together as properties with named keys, whereas arrays store data in indexed positons.
+2. What are the two ways to access properties in a JavaScript object, and which is preferred?
+The two ways are dot notation (e.g., `person.name`) and bracket notation (e.g., `person['name']`). Dot notation is preferred because it provides autocomplete support in text editors and is more readable. Bracket notation is useful when accessing properties dynamically using variables.
+3. How do you define a function as a property within a JavaScript object using the shorthand syntax?
+You write the function name followed by parentheses and then curly brackets containing the function code, omittin gthe `function` keyword. for example:
+sayKi() {
+  console.log('hi');
+};
+4. How would you access a nested propety in a JavaScript object? For example, if you have a person object with an address object containing a street property?
+You chain dot notation to access nested properties. For example, `person.address.street` would access the street property within the address object. Each dot accesses the next level of nesting in the object structure.
+5. What syntax is used to create an object in JavaScript, and how are propertiesx defined within it?
+Objects are created using curly brackets `{}`. Properties are defined as key-value pairs, with the property name followed by a colon and then the value. Multiple properties are separated by commas. 
+For example:
+const person = {
+  name: 'kyle',
+  age: 30
+
+};
+6. What is the shorhand syntax for defining a function called 'sayHi' inside an object?
+`sayHi() { // function code }`
+7. When would you use a bracket notation instead of dot notation to access object properties?
+When you need to access properties dynamically using a variable.
+
+
+# Session [] []:
 
 ## The "Why" (The Concept):
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review ():
+
+# Session [] []:
+
+## The "Why" ():
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review (Hoisting):
+
+# Session [] []:
+
+## The "Why" (The Concept):
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review ():
+
+# Session [] []:
+
+## The "Why" (The Concept):
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review ():
+
+# Session [] []:
+
+## The "Why" ():
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review (Hoisting):
+
+# Session [] []:
+
+## The "Why" (The Concept):
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review ():
+
+# Session [] []:
+
+## The "Why" (The Concept):
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review ():
+
+# Session [] []:
+
+## The "Why" ():
 
 - **Core Logic:**
 

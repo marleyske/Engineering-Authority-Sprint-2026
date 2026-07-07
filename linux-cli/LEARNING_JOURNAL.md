@@ -475,13 +475,13 @@ Reflection: The permission shortcuts help with quick group permission changes. C
 - You can reference an environment variable ($) before a variable ex. `$USER`.
 - When you modify an environment directly in the shell using `VARIABLE=value` it persist for the current session only.
 - If in one of the users other than root use `sudo vi /etc/environment` to set environment variables that need to be available to all users.
-- .bashrc file is a script that runs at the beginning of every bash session for a specific user located in it's home directory (`~/.bashrc`). It's used for customizations like setting environment variables, changing the prompt, setting up colors, and scripts for that user only.
+- .bashrc file is a script that runs at the beginning of every bash session for a specific user located in it's home directory (`~/.bashrc`). It's used for customizations like setting environment variables, changing the prompt, setting up colors, and scripts for that user only. Use `source ~/.bashrc` to apply changes immediately.
 - .bash_profile runs on login. .bashrc runs on every new interactive terminal window. That is why you "source" the bashrc-so that your termianl settings persist even if you aren't logging in fresh from the terminal screen.
 - .bash_profile should source .bashrc to ensure consistency. The bash script syntax to ensure bashrc is being run (use in `~/.bash_profile`):
   if [ -f ~/.bashrc ]; then
   source ~/.bashrc
   fi
-- Every user has their own .bashrc
+- Every user has their own .bashrc always create a `~/.bashrc.bak` for backup before editing if changes applied to `~/.bashrc` breaks something `mv .bashrc.bak .bashrc` to retain backup.
 
 ## Reference Data:
 
@@ -633,21 +633,22 @@ Reflection:
 - Switched to "Bridged" mode to allow the VM to request an IP directly from the physical router.
 - Encountered an IP collision (MAC address conflict) when cloning the second VM.
   **Resolution Steps:**
-  1.  **MAC Address:** Generated unique MAC addresses from each VM in UTM settings to stop IP conflicts.
+  1.  **MAC Address:** Generated unique MAC addresses from each VM in UTM Network Settings to stop IP conflicts.
   2.  **Network Reset:** Used `nmcli networking off` and `nmcli networking on` to force the VM to request a fresh IP via DHCP.
-  3.  **Verification:** Confirmed unique IP addresses usign `ip addr`.
+  3.  **Verification:** Confirmed unique IP addresses using `ip addr`.
   4.  **Service Setup:** Installed and enabled `openssh-server` on both nodes.
 
 3. Key Concepts Learned
    **Infrastructure as Code (Mental Model):** Realized that virtualization platforms (like Multipass) are "magic", but learning to manually configure networking (DHCP, `nmcli`, `ip addr`) is essential for real-world server administration.
    **SSH Fingerprints:** Learned that SSH host key warnings are security features to prevent man-in-the-middle attacks.
-   **Standardization:** Implemented hostnaming convetions (node1, node2) to ensure safety and clarity. Using `hostnamectl` and updating `/etc/hosts` (`sudo nano /etc/hosts` add this line to file `127.0.0.1 node2`), ensures that the OS correctly identifies itself, reducing the risk of accidental commands being run on the wrong server.
+   **Standardization:** Implemented hostnaming convetions (node1, node2) to ensure safety and clarity. Using `hostnamectl` and updating `/etc/hosts` (i.e. `sudo nano /etc/hosts` add this line to file `127.0.0.1 node2`), ensures that the OS correctly identifies itself, reducing the risk of accidental commands being run on the wrong server.
 
 4. Technical Commands Mastered
 
 - `ip addr`: View network interface status and IP assignment.
 - `nmcli networking [on/off]`: Manage network connectivity status.
 - `hostnamectl set-hostname <name>`: Define unique server identities.
+- `nano /etc/hosts` or `vi /etc/hosts`: Add the inet & name `127.0.0.1 [hostname]`
 - `sudo apt install openssh-server`: Configure the "doorman" for remote access.
 - `ssh user@<IP>`: Establish secure, encrypted remote shell access.
 
@@ -665,12 +666,40 @@ Reflection:
    SSH stands for Secure Shell. It allows you to connect from one computer to another computer and remotely execute commands on a different computer.
 2. What version control system uses SSH underneath the hood?
    Git uses SSH underneath the hood for connections.
-3. What command is used to creat a new virtual machine named 'secondary' using mulitpass?
-   The command is `multipass launch name secondary`. This creates a second VM on your computer.
+3. What command is used to create a new virtual machine named 'secondary' using mulitpass?
+   The command is `multipass launch --name secondary`. This creates a second VM on your computer.
 4. What is the purpose of the `-s` flag when using the `useradd` command?
    The `-s` flag specifies the default shell for the new user. for example, `-s /bin/bash` sets bash as the user's shell instead of the default dash shell.
 5. When creating a user with `useradd`, what does the `-m` flag do?
    The `-m` flag creates a home folder for the user automatically, so you don't have to create it manually.
+
+Reflection:
+
+## [2026-7-5] Session Linking two Machines with SSH:
+
+**Topics:** ssh, private & public keys, authorized_keys, IP address
+**Key Takeaways:**
+
+### Lesson Review (Linking two Machines with SSH):
+
+1. What is the command to generate an SSH key pair using RSA encryption?
+   `ssh-keygen -t rsa`. This command generates both a private key and public key for SSH authentication.
+2. What is the difference between a private SSH key and a public SSH key, and how should each be handled?
+   The private key is a secret that should never be revealed to anyone and remains on the originating machine. The public key can be shared with others and is placed on systems you want to connect to. Together, they allow cryptographic verification during SSH handshake without revealing the private key.
+3. Where should the public SSH key be placed on a remote server to enable SSH authentication, and what is the filename?
+   The public SSH key should be placed ina file called authorized_keys within the .ssh directory in the usere's home directory (`~/.ssh/authorized_keys`). This file can contain multiple public keys, one per line, allowing different users or machines to authenticate.
+4. What are the recommended file permissions for the .ssh directory and the authorized_keys file, and how do you set them?
+   The .ssh directory should have permissions 700 (read, write, execute for owner only), and the authorized_keys file should have permissions 600 (read and write for owner only). Set them using: `chmod 700 ~/.ssh` and `chmod 600 ~./ssh/authorized_keys`.
+5. What command can be used to display network information including IP addresses on a Linux system?
+   `ip addr` which is a replacement for the legacy `ifconfig` command. This command displays network interface information including IP addresses, netmasks, and broadcast addresses for all network interfaces on the system.
+6. What does the SSH key consist of?
+   A private key and a public key.
+7. Where should the private SSH key be stored?
+   On the machine that initiates the connection.
+8. What does the IP address 127.0.0.1 represent?
+   The local loopback address.
+
+Reflection:
 
 ### 1. The "Triage & Rescue" Lab (Simulation)
 

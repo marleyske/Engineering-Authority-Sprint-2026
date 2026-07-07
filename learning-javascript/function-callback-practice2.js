@@ -11,7 +11,7 @@ Pass that square variable to the callback.
 Console log the result of the callback.
 
 Bonus: Create a callback called doubleIt that takes that square and multiplies it by 2.
-*/
+
 
 function calculateSquare(number, callback) {
   const square = number * number;
@@ -28,3 +28,4 @@ function addFive(num) {
 
 calculateSquare(5, doubleIt);
 calculateSquare(5, addFive);
+*/
