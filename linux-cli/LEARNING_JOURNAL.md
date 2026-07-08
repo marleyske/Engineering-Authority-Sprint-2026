@@ -592,7 +592,9 @@ Reflection: For exit codes and process operators a successfull exit code returns
 **Topics:**
 **Key Takeaways:**
 
--
+- Use the $(command) to execute a subcommand ex; echo my name is $(whoami) will output the current user in place of whoami subcommnd.
+- The `echo $(date +%x) - $(uptime) >> log.txt` command appends the date and uptime output into a file, in this case the log.txt one.
+- The `.bashrc` file is always ready when you log into a new bash session.
 
 ## Reference Data:
 
@@ -610,7 +612,7 @@ Reflection: For exit codes and process operators a successfull exit code returns
    This will execute both date and uptime commands and append their output to log.txt.
 5. In the ps aux command output, what information do the CPU and %MEM colums provide?
    The CPU column shows the percentage of CPU usage for each process, and %MEM shows the percent of memory usage. These columns can be sorted to identify processes that ar consuming excessive resources.
-6. What configuration file is always rea when you log into a new bash session?
+6. What configuration file is always ready when you log into a new bash session?
    `.bashrc`
 
 Reflection:
@@ -620,7 +622,9 @@ Reflection:
 **Topic:** Building a Multi-Node Vurtualized Lab (UTM/Linux):
 **Key Takeaways:**
 
--
+- SSH stands for secure shell it allows you to connect from one computer to another with the ability to run commands remotely.
+- The `-s` flag sets the default shell for the new user when `useradd` instead of dash.
+- The `-m` flag creates a home folder automatically so you don't have to do it manually.
 
 1. The Challenge:
    **Goal:** Create a two-node Linux environment for an "SSH & Secondary Machine" lsesson.
@@ -680,6 +684,13 @@ Reflection:
 **Topics:** ssh, private & public keys, authorized_keys, IP address
 **Key Takeaways:**
 
+- `ssh-keygen -t rsa` is the command to generate both a priveate and public SSH key for SSH authentication.
+- Private keys should never be shared also, should remain on originating machine and public keys can be shared with others and is placed on systems.
+- The Public SSH key should be stored in the authorized_keys file within the .ssh directory in the users home directory (`~/.ssh/authorized_keys`).
+- Recommended file permissions are `700` for .ssh directory and `600` for authorized_keys file.
+- `ip addr` displays key network interface information including IP addresses, netmasks and broadcast addresses for all newtwork interfaces on a system.
+- IP address `127.0.0.1` represents the local loopback address.
+
 ### Lesson Review (Linking two Machines with SSH):
 
 1. What is the command to generate an SSH key pair using RSA encryption?
@@ -701,6 +712,104 @@ Reflection:
 
 Reflection:
 
+## [2026-7-7] Session SFTP:
+
+**Topics:**
+**Key Takeaways:**
+
+### Reference Data:
+
+### Lesson Review (SFTP):
+
+1. What is SFTP and how does it relate to FTP?
+   SFTP stands for Secure File Trasfer Protocol. It is a variation of FTP (File Trasfer Protocol) that provides secure file transfers between computers. Ulike traditional FTP, SFTP uses the SSH protocol for security, making it more secure than plain FTP.
+2. What is the main advantage of SFTP over traditional FTP in terms of setup?
+   When you set up SSH, you automatically set up SFTP at the same time because they use the same protocol and ports. Traditional FTP requires separate setup, works on a different protocol, and requires different keys. SFTP is also more secure because all communication goes through SSH.
+3. How do you initiate an SFTP connection to a remote server if you already have SSH configured?
+   You use the command `sftp` followd by the connection details, similar to how you would use SSH. Since SFTP uses the same protocol as SSH, if SSH is already configured, SFTP will work immediately without additional setup.
+4. In SFTP, what is the difference between `pwd` and `lpwd` commands?
+   `pwd` shows the remote working directory (the directory on the remote server you're connected to), while `lpwd` shows the local working directory (the directory on your local computer). The 'l' prefix stands for 'local'.
+5. What commands would you use to upload a file to a remote server and download a file from a remote server using SFTP?
+   To upload a file, use the `put` command followed by the filename (e.g., `put filename.txt`). To download a file, use the `get` command followed by the filename (e.g., `get filename.txt`). You can also optionally specify a new name for the file as a second argument.
+6. How do you execute a command on your local machine while connected via SFTP?
+   Use the exclamation point (!) prefix before the command.
+7. What command is used to upload a file from local to remote server in SFTP?
+   `put`
+8. Why is SFTP considered more secure than plain FTP?
+   SFTP uses the SSH secure communication protocol
+
+## [2026-7-7] Session Wget:
+
+**Topics:**
+
+**Key Takeaways:**
+
+### Reference Data:
+
+### Lesson Review (Wget):
+
+1. What is the primary difference between Wget and cURL in terms of how they handle data?
+   Wget is mor like CP for the Internet - it downloads files directly to disk. cURL connects into pipes and uses standard in and standard out, allowing you to pipe data from the Internet into other programs.
+2. What unique capability doe Wget hav that cURL does not?
+   Wget can do recursive downloads. It can read through a website, find other URLs (like CSS and JavaScript files that link to other files), and download thos URLs as well, effectively downloading entire websites recursively.
+3. After downloading a .sh file using Wget, what additional step is typically needed before you can execute it?
+   You need to give it executable permissions using chmod. You can use either `chmod +x filename.sh` or `chmod 700 filename.sh` to make the file executable.
+4. What does the green color indicate when viewing files with the `ls` command in a typicall shell configuration?
+   Gree color indicates that the file has executable permissions.
+5. How can you run a shell script file without making it executable first?
+   You can pipe it directly into bash, for example: `bash scriptname.sh`.
+
+## [2026-7-7] Session curl Basics:
+
+**Topics:**
+
+**Key Takeaways:**
+
+### Reference Data:
+
+### Lesson Review (curl Basics):
+
+1. What is the default behavior of cURL when fetching a URL without any additional options?
+   cURL prints the fetched content directly to standard output (stdout) rather than saving it to a file.
+2. How do you redirect cURL output to a file using shell redirection? For example, to save content to `game.sh`:
+   Use the angle bracket operator to redirect output:
+   `curl [URL] > game.sh`
+   This follows the standard Linux patter for redirecting output to a file.
+3. What is a primary use case for cURL in API development?
+   cURL is commonly used to hit API endpoints and test if they're reponsidng correctly. It serves as a command-line alternative to tolls like Postman or Insomnia for API testing and development.
+4. What command starts a Python 3 HTTP server on port 8000 that binds to all network interfaces?
+   `python3 -m http.server 8000 --bind 0.0.0.0`
+   This starts a static web server that serves files from the current directory.
+5. What does a GET request log entry typically show when running a Python HTTP server?
+   It shsows the requesting IP address, timestap, request method (GET), the requested path, the HTTP protocol version (e.g., HTTP 1.1), and the response status code (e.g., 200).
+6. What happens when you run curl with a URL without any additional parameters?
+   It prints the content to standard out.
+
+## [2026-7-7] Session curl & HTTP Verbs:
+
+**Topics:**
+
+**Key Takeaways:**
+
+### Reference Data:
+
+### Lesson Review (curl & HTTP Verbs):
+
+1. What curl command option is used to change the HTTP ver (like POST, PUST, DELETE)?
+   The -X option is used to change the HTTP verb. For example: `curl -X POST http://example.com` or `curl -X DELETE http://example.com`.
+2. When using curl with the -d option to send data, what HTTP verb is used by defult?
+   `POST` is used by default when using the `-d` option, because `GET` requests don't have bodies. Only `POST` request have bodies, so curl implicitly makes it a `POST` request when a body is provided.
+3. How can you send cookies witha curl request?
+   Use the `-b` option followed by the cookie data. for example: `curl -b "name=brian" http://example.com`. For multple cookies stored in a file (cookie jare), use the -c option with a file path.
+4. How can you make curl follow HTTP redirects?
+   Use the `-L` option. By default, curl won't follow redirects, so you must explicitly tell it to do so with the `-L` flag.
+5. How can you copy a network request froma browser's DevTools as a curl command?
+   In Firefox, Chrome, or Edge, open DevTools, go to the Network tab, right-click on any network request, and select 'Copy as a cURL'. this copies a fully-formed curl request with all headers, verbs, and request body that can be replayed from the command line.
+6. Which curl flag is used to send custom hearders with a request?
+   `-H`
+7. What security risk exists when piping curl output directly to bash?
+   The server could execute malicious code on your system without your knowledge or verification.
+
 ### 1. The "Triage & Rescue" Lab (Simulation)
 
 This lab simulates the exact work of an autonomous vehicle support specialist: finding a specific error in a large file and documenting it.
@@ -709,6 +818,16 @@ This lab simulates the exact work of an autonomous vehicle support specialist: f
 - **The Task:** Use `cat` or `grep` to search through those files to find a specific string (e.g., "ERROR: Connection Lost").
 - **The Documentation:** Once you find the error, use `nano` or `vim` to create a new file named `incident_report.txt`. In that file, log the filename where the error was found, the time (you can make this up), and a brief description of how you found it.
 - **Why this works:** It forces you to use `grep`, file navigation, and documentation—the three pillars of the role you applied for.
+
+### This to look for while studying Package Management:
+
+**APT Basics:**
+
+- Focus on why we have to run sudo apt update before sudo apt install. (Hint: It’s not just updating your software—it’s updating your map of where the software lives!)
+  **APT Q&A:**
+- Pay attention to dependencies. When you install one tool, why does the package manager often ask to install 10 other things?
+  **Snaps:**
+- Notice the difference in "containerization." How is a snap package fundamentally different from a traditional apt package in terms of where it stores its files and how it stays updated?
 
 ### Answer:
 
@@ -795,7 +914,7 @@ ubuntu@first-skink:~/log_simulation$ history | grep "ssh"
 
 ### 4. Configure Your Environment:
 
-- **Task:** Instesd of just practicing export, use your .bashrc or .bash_profile file to create a permanent alias or environment variable that helps you in your daily work.
+- **Task:** Instead of just practicing export, use your .bashrc or .bash_profile file to create a permanent alias or environment variable that helps you in your daily work.
 
 - **Why this works:** It gives me the practice I need to use .bashrc for creating environment variable needed to use frequently and the use of .bash_profile to set a script to assign the .bashrc environment variables as the go to source perminently.
 
