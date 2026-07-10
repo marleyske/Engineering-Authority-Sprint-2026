@@ -626,14 +626,31 @@ Reflection:
 - The `-s` flag sets the default shell for the new user when `useradd` instead of dash.
 - The `-m` flag creates a home folder automatically so you don't have to do it manually.
 
+## Reference Data:
+
+### Lesson Review (SSH & Secondary Machine):
+
+1. What does SSH stand for and what is it's primary purpose?
+   SSH stands for Secure Shell. It allows you to connect from one computer to another computer and remotely execute commands on a different computer.
+2. What version control system uses SSH underneath the hood?
+   Git uses SSH underneath the hood for connections.
+3. What command is used to create a new virtual machine named 'secondary' using mulitpass?
+   The command is `multipass launch --name secondary`. This creates a second VM on your computer.
+4. What is the purpose of the `-s` flag when using the `useradd` command?
+   The `-s` flag specifies the default shell for the new user. for example, `-s /bin/bash` sets bash as the user's shell instead of the default dash shell.
+5. When creating a user with `useradd`, what does the `-m` flag do?
+   The `-m` flag creates a home folder for the user automatically, so you don't have to create it manually.
+
+Reflection:
+
 1. The Challenge:
    **Goal:** Create a two-node Linux environment for an "SSH & Secondary Machine" lsesson.
    **Roadblock:** Multipass daemon failures required a pivot to UTM VMs.
    **Network Obstacle:** VMs were "air-gapped" (Connection Failed error), preventing internal communication and SSH access.
-2. Troubleshooting Process
+2. Troubleshooting Process:
    **Network Diagnosis:**
 
-- Initial attempt at "Shared" network mode railed to provide an IPV4 address.
+- Initial attempt at "Shared" network mode failed to provide an IPV4 address.
 - Switched to "Bridged" mode to allow the VM to request an IP directly from the physical router.
 - Encountered an IP collision (MAC address conflict) when cloning the second VM.
   **Resolution Steps:**
@@ -661,23 +678,6 @@ Reflection:
 - Always verify network connectivity _before_ attempting SSH.
 - Standardize naming conventions early to prevent confusion.
 - "Command not found" is not a wall; it's a hint-use the shell's output to find the missing package.
-
-## Reference Data:
-
-### Lesson Review (SSH & Secondary Machine):
-
-1. What does SSH stand for and what is it's primary purpose?
-   SSH stands for Secure Shell. It allows you to connect from one computer to another computer and remotely execute commands on a different computer.
-2. What version control system uses SSH underneath the hood?
-   Git uses SSH underneath the hood for connections.
-3. What command is used to create a new virtual machine named 'secondary' using mulitpass?
-   The command is `multipass launch --name secondary`. This creates a second VM on your computer.
-4. What is the purpose of the `-s` flag when using the `useradd` command?
-   The `-s` flag specifies the default shell for the new user. for example, `-s /bin/bash` sets bash as the user's shell instead of the default dash shell.
-5. When creating a user with `useradd`, what does the `-m` flag do?
-   The `-m` flag creates a home folder for the user automatically, so you don't have to create it manually.
-
-Reflection:
 
 ## [2026-7-5] Session Linking two Machines with SSH:
 

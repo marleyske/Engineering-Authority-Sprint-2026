@@ -101,3 +101,13 @@ const book = {
   },
 };
 book.publish();
+
+function addElement(array, element) {
+  array.push(element);
+}
+
+let numbers = [1, 2, 3];
+
+addElement(numbers, 4);
+
+console.log(numbers)

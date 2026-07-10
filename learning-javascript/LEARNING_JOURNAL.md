@@ -433,31 +433,28 @@ Using empty square brackets: [].
 ### Lesson Review (Objects):
 
 1. What is the primary difference between arrays and objects in JavaScript?
-Arrays are used for storing a list of data that starts at a point and ends at a point, while objects are used for storing a collection of data together as properties with named keys, whereas arrays store data in indexed positons.
+   Arrays are used for storing a list of data that starts at a point and ends at a point, while objects are used for storing a collection of data together as properties with named keys, whereas arrays store data in indexed positons.
 2. What are the two ways to access properties in a JavaScript object, and which is preferred?
-The two ways are dot notation (e.g., `person.name`) and bracket notation (e.g., `person['name']`). Dot notation is preferred because it provides autocomplete support in text editors and is more readable. Bracket notation is useful when accessing properties dynamically using variables.
+   The two ways are dot notation (e.g., `person.name`) and bracket notation (e.g., `person['name']`). Dot notation is preferred because it provides autocomplete support in text editors and is more readable. Bracket notation is useful when accessing properties dynamically using variables.
 3. How do you define a function as a property within a JavaScript object using the shorthand syntax?
-You write the function name followed by parentheses and then curly brackets containing the function code, omittin gthe `function` keyword. for example:
-sayKi() {
-  console.log('hi');
-};
+   You write the function name followed by parentheses and then curly brackets containing the function code, omittin gthe `function` keyword. for example:
+   sayKi() {
+   console.log('hi');
+   };
 4. How would you access a nested propety in a JavaScript object? For example, if you have a person object with an address object containing a street property?
-You chain dot notation to access nested properties. For example, `person.address.street` would access the street property within the address object. Each dot accesses the next level of nesting in the object structure.
+   You chain dot notation to access nested properties. For example, `person.address.street` would access the street property within the address object. Each dot accesses the next level of nesting in the object structure.
 5. What syntax is used to create an object in JavaScript, and how are propertiesx defined within it?
-Objects are created using curly brackets `{}`. Properties are defined as key-value pairs, with the property name followed by a colon and then the value. Multiple properties are separated by commas. 
-For example:
-const person = {
-  name: 'kyle',
-  age: 30
+   Objects are created using curly brackets `{}`. Properties are defined as key-value pairs, with the property name followed by a colon and then the value. Multiple properties are separated by commas.
+   For example:
+   const person = {
+   name: 'kyle',
+   age: 30
 
-};
-6. What is the shorhand syntax for defining a function called 'sayHi' inside an object?
-`sayHi() { // function code }`
-7. When would you use a bracket notation instead of dot notation to access object properties?
+}; 6. What is the shorhand syntax for defining a function called 'sayHi' inside an object?
+`sayHi() { // function code }` 7. When would you use a bracket notation instead of dot notation to access object properties?
 When you need to access properties dynamically using a variable.
 
-
-# Session [] []:
+# Session [2026-7-8] [Reference vs Value]:
 
 ## The "Why" (The Concept):
 
@@ -467,9 +464,51 @@ When you need to access properties dynamically using a variable.
 
 ### Reference Data:
 
-### Lesson Review ():
+### Lesson Review (Reference vs Value):
 
-# Session [] []:
+1. What is the difference between value types and reference types in JavaScript in terms of what gets stored in a variable?
+   Value types store the actual data directly i the variable (like the number 10 or string "hi"). Reference types store a memory location that points to where the actual data is stored. Primitive types are value types, while arrays and objects are reference types.
+2. Given the followin gcode, what will be the values of `a` and `b`, and why?
+
+let a = 10;
+
+let b = a;
+
+b = b + 1;
+`a` will be 10 and `b` will be 11. When `b` is assigned the value of `a` it copies the actual value (10). Since primitives are value types, `a` and `b` are indepenent variables, so changing `b` does not affect `a`. 3. Why does comparing two arrays with identical content using equality operators return false in JavaScript?
+
+let a = [1, 2];
+
+let b = [1, 2];
+
+console.log(a === b );
+The comparison returns false because equality operators compare the value column (the memory reference), not the actual content. when two arrays are created separately, they reference different locations in memeory, even if their contents are identical. The are like two different hotel rooms with the same furniture. 4. Why is it possible to modify a constant array using methods like `push()` but not possible to reassign it entirely?
+
+const array = [1, 2];
+
+array.push(3); // this works
+
+array = [4, 5]; // this causes an error
+The `const` keyword only prevents reassigning the value column (the memory reference). Using `push()` modifies the contents at the memory location without changing the reference itself. Reassigning with `=` tries to change the memory reference, which const prevents. It's like being allowed to reaarange furniture in your hotel room but not being allowd to switch to a different room.
+
+5. What happens when an array is passed as a parameter to a function, and why does modifying it inside the function affect the original array?
+
+function addElement(array, element) {
+
+array.push(element);
+
+}
+
+let numbers = [1, 2, 3];
+
+addElement(numbers, 4);
+
+When an array is passed to a function, JavaScript passes reference (memory location) to that array, not a copy of the array itself. Both the original variable and the function parameter point to the same location in memory. Any modifications made inside the function affect the original array because they're both accessing the same data. 6. What happens when you assign one primitive value variable to another variable in JavaScript?
+The value is copied directly inot the new variable, creating two independent variables. 7. What happens when you pass an array to a function in JavaScript?
+A reference to the original is passed, so modifications affect the original. 8. What are the two main reference types in JavaScript?
+Arrays and objects.
+
+# Session [2026-7-9] [String Template Literals]:
 
 ## The "Why" ():
 
@@ -479,9 +518,25 @@ When you need to access properties dynamically using a variable.
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
+### Lesson Review (String Template Literals):
 
-# Session [] []:
+1. What key on the keyboard is used to create template literal strings in JavaScript?
+   The back tick key (`) which is located directly above the tab key on the keyboard (the tilde key).
+2. What is the syntax for embedding a variable or JavaScript expression inside a template literal string?
+   Use a dollar sign followed by curly braces:
+   `S{expressions}`. Anything between the curly braces will be executed as JavaScript code and the result will be inserted into the string.
+3. How would you rewrite the string concatenation `firstName + " " + lastName` using a template literal?
+   Using template literals: `${firstNmae} ${lastName}`.
+4. What happens to whitespace characters (spaces, tabs, and newlines) when using multi-line template literal strings?
+   All whitespace characters including spaces, tabs, and newlines are preserved and included in the final string output. This means that any indentation of formatting in the code will arppear in the resulting string.
+5. Can template literals execute JavaScript expression s other than varibles, and if so, what would `${2 + 3}` output?
+   Yes, template literals can execute any JavaScript expression, not just variables. The expression `${2 + 3}` would output the string "5" because it evaluates the arithmetic expression and inserts the result into the string.
+6. What is the primary advantage of useing template literals (back ticks) over traditional string concatenation in JavaScript?
+   They allow you to embed variables and expressions directly into strings without using concatenation operators.
+7. What can be placed inside the ${} syntax of a template literal?
+   Any valid JavaScript code including variables, expressions, functions, and operations.
+
+# Session [2026-7-9] [this Keyword & Classes]:
 
 ## The "Why" (The Concept):
 
@@ -491,7 +546,54 @@ When you need to access properties dynamically using a variable.
 
 ### Reference Data:
 
-### Lesson Review ():
+### Lesson Review (this Keyword & Classes):
+
+1. What does the `this` keyword reference when used at the global scope in a browser environment?
+   In the browser `this` at the global scope references the Window object, which is the global object in the brwoser environment. In Node.js, it would reference the global object instead.
+2. How is `this` keyword typically used within an object method?
+   Inside an object method, `this` references the object itself, allowing access to all properties and methods defined on that object. For example, in a `greet` function within a person object, `this.name` would access the name property of that person object.
+3. What is the purpose of the `constructor` function in a JavaScript class?
+   The constructor function is called when creating a new instance of a class using the `new` keyword. It initializes the object by setting properties and values. The constructor receives parameters (like name and age) and assigns them to the object using the `this` keyword.
+4. What is the naming convention for classes in JavaScript, and why is it different from regular variables?
+   Classes in JavaScript should start with an uppercase letter (using PascalCase where all words are capitalized), while regular variables use camelCase. This is a convention that helps distinguish classes from other variables and is consistent with built-in JavaScript classes.
+5. Why is the `new` keyword required when creating an instance of a class like `Date`?
+
+const date = new Date();
+The `new` keyword is required to create a new instance of a class. It calls the constructor function of the class, creates a new object, and returns that object with all properties and methods defined in the class. Without `new` the constructor function would not execute properly.
+
+6. In the follwing class definition, what is the purpose of the constructor function?
+
+class Person {
+
+constructor(name, age) {
+
+    this.name = name;
+
+    this.age = age;
+
+}
+}
+
+It initializes properties when creating a new instance of the class.
+
+7. In the following code, what does `this.mame` reference inside the `geet` method?
+
+class Person {
+
+constructor(name, age) {
+
+    this.name = name;
+
+    this.age = age;
+
+}
+greet() {
+
+    console.log("Hello, my name is " + this.mame);
+
+}
+
+}
 
 # Session [] []:
 
