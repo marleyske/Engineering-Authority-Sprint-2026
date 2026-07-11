@@ -717,6 +717,8 @@ Reflection:
 **Topics:**
 **Key Takeaways:**
 
+-
+
 ### Reference Data:
 
 ### Lesson Review (SFTP):
@@ -744,6 +746,8 @@ Reflection:
 
 **Key Takeaways:**
 
+-
+
 ### Reference Data:
 
 ### Lesson Review (Wget):
@@ -764,6 +768,8 @@ Reflection:
 **Topics:**
 
 **Key Takeaways:**
+
+-
 
 ### Reference Data:
 
@@ -790,6 +796,8 @@ Reflection:
 **Topics:**
 
 **Key Takeaways:**
+
+-
 
 ### Reference Data:
 
@@ -824,7 +832,7 @@ Reflection:
 
 - Notice the difference in "containerization." How is a snap package fundamentally different from a traditional apt package in terms of where it stores its files and how it stays updated?
 
-## [2026-8-7] Session Package Management & APT Basics:
+## [2026-7-8] Session Package Management & APT Basics:
 
 **Topics:** APT, apt-get
 
@@ -853,11 +861,13 @@ Reflection:
 8. What does the command `sudo apt upgdate` do?
    It Downloads the latest package list.
 
-## [2026-8-7] Session APT Q&A:
+## [2026-7-8] Session APT Q&A:
 
 **Topics:**
 
 **Key Takeaways:**
+
+-
 
 ### Reference Data:
 
@@ -876,7 +886,7 @@ Reflection:
 6. What does the `sudo apt update` command do?
    Updates the list of available packages from the registry
 
-## [2026-8-7] Session Snaps:
+## [2026-7-8] Session Snaps:
 
 **Topics:**
 
@@ -905,7 +915,7 @@ Reflection:
 
 Reflection:
 
-## [2026-8-7] Session
+## [2026-7-10] Session Writing Scripts:
 
 **Topics:**
 
@@ -915,13 +925,22 @@ Reflection:
 
 ### Reference Data:
 
-### Lesson Review
+### Lesson Review (Writing Scripts):
 
-1.
+1. What does the `-p` flag do when used with the `mkdir` command?
+The `-p` flag prevents `mkdir` from throwing an error if the directory already exists. Without this flag, `mkdir` would error out when trying to create a directory that already exists, which could cause a script to fail.
+2. What is the difference between running a bash script with `source script.sh` versus `bash script.sh`?
+`source` runs the script in the current process, so changes like `cd` commands will affect the current shell session. `bash script.sh` creates a subprocess to run the script, so changes like directory changes only last for the duration of that subporcess and don't affect the parent shell.
+3. What bash command creates a series of numbered files, such as file1.txt thorugh file100.txt?
+You can use brace expansion with `touch: touch file{1..100}.txt`. This will create files named file1.txt, file2.txt, through file100.txt.
+4. When you use `cd` inside a bash script, does the directory change persist after the script finishes executing?
+No, when you run a script with `bash script.sh`, the directory change only lasts for the duration of the script execution because it runs in a subprocess. However, if you run the script in `source`, the directory change will persist in the current shell.
+5. What are two equivalent ways to execute a bash script in the current shell process?
+You can use either `source script.sh` or `. script.sh` (dot notation). Both execute the script in the current shell process rather than creating a subprocess. The dot notation works in more Linux distributions than `source`. 
 
 Reflection:
 
-## [] Session
+## [2026-7-10] Session Hashbang:
 
 **Topics:**
 
@@ -931,13 +950,26 @@ Reflection:
 
 ### Reference Data:
 
-### Lesson Review
+### Lesson Review (Hashbang):
 
-1.
+1. What is the syntax for a sheband (or hasbang) at the beginnign of a bash script?
+A shebang begins witha a hash and a exclamation point (#!) followed by the path to the interpreter. For bashscripts, it's written as `#!/bin/bash` at the very top line of the file. There can optionally be a space after the shebang.
+2. What is the purpose of a shebang in a script file?
+The shebang tells bash which iterpreter should be used to execute the file. For example, `#!bin/bash` indicates the file should be interpreted as a bash script, while `#!/user/bin/python` would indicate a Python file. This allows bash to determin how to run the file even if it has no file extension.
+3. What command is used to make a file executable in bash?
+The `chmod +x filename` command is used to add execute permissions to a file, making it directly invocable.
+4. How can you execute a script file that has a shebang and execute permissions without explicitly calling the interpreter?
+You can run it directly using `./filename`. The shebang at the top of the file tells the system which interpreter to use, so you don't need to prefix it with `bash` or `python` or any other interpreter command.
+5. What command can you use to find the full path to an interpreter like node?
+The `which` command can be used to find the full path to an interpreter. For example, `which node` will return the full path to the node executable.
+6. Why is using a shebang beneficial when sharing scripts between users with different shells?
+It ensures the script runs with the intended interpreter regardless of the user's default shell.
+7. Which of the following is a valid shebang for a Node.js script?
+`#!/bin/bash/node` or `#!/snap/bin/node`
 
 Reflection:
 
-## [] Session
+## [2026-7-10] Session Path & Variables:
 
 **Topics:**
 
@@ -947,9 +979,24 @@ Reflection:
 
 ### Reference Data:
 
-### Lesson Review
+### Lesson Review (Path & Variables):
 
-1.
+1. What does the PATH environment variable contain and how does Bash use it?
+The PATH environment variable contains a colon-separated list of directory paths where executable programs are stored. Bash searches these directories from left to right to find and execute commands that are typed in the terminal.
+2. What does the `./` prefix mean when running a file in Bash?
+The `./` prefix tells Bash to run a file from the current directory rather than searching for it in the PATH directories. The dot represents the current directories. The dot represents the current directory and the slash is the path separator.
+3. How do you add a new directory to the beginning of the PATH variable without overwriting existing PATH entries?`export PATH=/home/user/my_bin:$PATH`
+Use the syntax `export PATH=/new/directory:$PATH`. The colon separates path entries, and `$PATH` appends the existing PATH contents. Without `:$PATH`, you would overwrite the entire PATH variable instead of adding to it.
+4. How do you add comments in a Bash script?
+Use the hash symbol `#` to add comments. Everything after the `#` on a lin is treated as a comment and not executed. Comments can be on their own line or at the end of a command line.
+5. How do you define and use variables in a Bash script? 
+DESTINATION=/tmp/text
+echo $DESTINATION
+Define variables using the sytax `VARIABLE_NAME=value` (no spaces around the equals sign). Access variables using `$VARIABLE_NAME`. Quotes around the value are optional if there are no spaces.
+6. what does the `$PATH` environment variable contain?
+Locations where programs are found.
+7. When searching through directories in the PATH, in what order does Bash look for programs?
+Left to right
 
 Reflection:
 
