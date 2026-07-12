@@ -168,13 +168,6 @@ It allows important code to be placed at the top of a file while helper function
 
 # Session [2026-7-3] [Closures]:
 
-## The "Why" (The Concept):
-
-- **Core Logic:**
--
-
-- **Aha! Moment:**
-
 ### Reference Data:
 
 ### Lesson Review (Closures):
@@ -237,8 +230,6 @@ It would return 'Hello Kyle'. The returned function remembers the 'greeting' par
    As many levels nested outward as exist.
 
 # Session [2026-7-3] [Creating Variables with var]:
-
-## The "Why" (The Concept):
 
 - **Core Logic:**
 
@@ -316,8 +307,6 @@ _Studied concepts: Variable declarations, function scope, scope chain, hoisting,
 
 # Session [2026-6-7] [Type Coercion]:
 
-- **Aha! Moment:**
-
 ### Reference Data:
 
 ### Lesson Review (Type Coersion):
@@ -334,12 +323,6 @@ _Studied concepts: Variable declarations, function scope, scope chain, hoisting,
    Coverting one data type to another type, such as a number to a string or a string to a number.
 
 # Session [2026-7-6] [NaN]:
-
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
 
 ### Reference Data:
 
@@ -362,12 +345,6 @@ _Studied concepts: Variable declarations, function scope, scope chain, hoisting,
 
 # Session [2026-7-3] [Equality Type Comparison]:
 
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
-
 ### Reference Data:
 
 ### Lesson Review (Equality Type Comparison):
@@ -388,12 +365,6 @@ _Studied concepts: Variable declarations, function scope, scope chain, hoisting,
    This returns true because double equals performs type coercion and treats null and undefined as equal since they both represent "not a value." However, if using triple equals (===). this would return false because null and undefined are technically different types.
 
 # Session [2026-7-6] [Arrays]:
-
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
 
 ### Reference Data:
 
@@ -422,12 +393,6 @@ Using empty square brackets: [].
 
 # Session [2026-7-6] [Objects]:
 
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
-
 ### Reference Data:
 
 ### Lesson Review (Objects):
@@ -455,12 +420,6 @@ Using empty square brackets: [].
 When you need to access properties dynamically using a variable.
 
 # Session [2026-7-8] [Reference vs Value]:
-
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
 
 ### Reference Data:
 
@@ -510,12 +469,6 @@ Arrays and objects.
 
 # Session [2026-7-9] [String Template Literals]:
 
-## The "Why" ():
-
-- **Core Logic:**
-
-- **Aha! Moment:**
-
 ### Reference Data:
 
 ### Lesson Review (String Template Literals):
@@ -537,12 +490,6 @@ Arrays and objects.
    Any valid JavaScript code including variables, expressions, functions, and operations.
 
 # Session [2026-7-9] [this Keyword & Classes]:
-
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
 
 ### Reference Data:
 
@@ -595,9 +542,227 @@ greet() {
 
 }
 
+# Session [2026-7-11] [if Statements]:
+
+### Reference Data:
+
+### Lesson Review (if Statements):
+
+1. What is the syntax for creating a basic if statement in JavaScript?
+   Write the keyword 'if' followed by parentheses containing the condition to check, then curly brackets containing the code to run if the condition is true. For example:
+
+if (age >= 18) {
+
+console.log("You can vote");
+
+} 2. How does an if-else statement work in JavaScript when the condion evaluates to false?
+When the condition in an if statement evaluates to false, the code inside the if block is skipped entirely, and the code inside the else block is executed instead. The else keyword is placed directly after the closing bracket of the if statemen, followed by curly brakets containing the alternative code to run. 3. Waht are the six falsy values in JavaScript that evaluate to false in conditional statements?
+The six falsy values in JavaScript are: 0 (zero), empty string (""), null, undefined, NaN (not a number), and false itself. All other values are considered truthy and will evaluate to true in a boolean context. 4. Waht are guard clauses and how do they help avoid nested if statements?
+Guard clauses are early returns from a function that check for invalid conditions first and exit immediately if they're met. Instead of nesting if statements, you check the opposite condition first and return early, allowing the rest of the code to execute without nesting. for example:
+
+if (weather !== "sunny") {
+
+console.log("Not a sunny day");
+
+return;
+
+}
+
+// Continue with code knowing weather is sunny 5. How does an else-if statement work in JavaScript, and what happens when the first condition is false?
+An else-if statement is created by writing 'else if' after an if statement's closing bracket, followed by parentheses with a new condition to check. When the first condition is false, JavaScript moves to check the else-if condition. If that's true, it runs that block's code and skips to the end. If it's also false, if continues to the next else-if or else statement. Only one block of code will ever run in an if-else-if chain. 6. What is the difference between using `&&` (AND) and `||A` (OR) operators in an if satatement condition?
+AND requires all conditions to be true, OR requires at least one condition to be true.
+
+# Session [2026-7-11] [Ternary Operator]:
+
+### Reference Data:
+
+### Lesson Review (Ternary Operator):
+
+1. What are three components that make up a tenary operator in JavaScript?
+   A tenray operator consists of:
+
+1) A condition/check that evalueates to true or false
+2) A question mark (?) symbol
+3) A colon (:) symbol
+   The syntax is: `condition ? valueIfTrue : valueIfFalse`
+
+2. In a ternary operator, what value is returned when the condition evaluates to true versus false?
+   When the conditon evaluates to true, the ternary operator returns the value immediately after the question mark (?). When the condition evaluates to false, it returns the value after the colon (:).
+3. Why is chaining ternary operators generally discouraged?
+   Chaining ternary operators makes code difficult to read and maintian. When multiple ternary operators are nested within each other, the code becomes messy and hard to understand. It's better to use a standard if-else-if statement for complex conditions.
+4. What is the recommended use case for ternary operators?
+   Ternary operators are best used when you have a simple condiiton with two outputs and you're using that output to assign a variable. They work well for straightforward expressions with simple values being assigned to a specicfic variable.
+5. Conver the following if-else statement to a ternary operator:
+
+let weather;
+
+if (temperature > 75) {
+
+weather = "hot";
+
+} else {
+
+weather = "not hot";
+}
+
+`const weather = temperature > 75 ? "hot" : "not hot"`
+
+# Session [2026-7-11] [Switch Statement]:
+
+### Reference Data:
+
+### Lesson Review (Switch Statement):
+
+1. What is the basic syntax structure of a switch statement in JavaScript?
+   A switch statement uses the `switch` keyword followed by a variable in parentheses, then curly braces containing the cases. Each case uses the `case` keyword followed by a value and a colon, then code to execute, and ends witha break statement. A `default` case can be added as a fallback.
+2. What happens if you forget to inclde a `break` statement at the end of a case in a switch statement?
+   Without a `break` statement, the code will "fall through" to the next case and continue executing code until it reaches a `break` keyword or the end of the switch statement. This causes multiple cases to run together, which is usually unintended behavior.
+3. When should you use a switch statement instead of an if-else statement?
+   Switch statements are better when checking one variable against multiple values, when you have lots of different conditions to check, and when all conditions use strict equality. If-else statements are better for more complex conditions, comparing different variables, or when you only have one or two checks.
+4. Why might you need to wrap code inside curly braces within a switch case, and what prolem does this solve?
+   Switch statements don't automatically create separate scopes for each case. All cases share the same scope, which can cause errors if you try to declare variables with the same name in different cases. Wrapping case code in curly braces creates separate scopes for each case, preventing variable conflicts.
+5. What type of equality comparison does a switch statement use, and can it perform type coercion?
+   Switch statements use strict equality (===) to compare values. The do not perform automatic type coercion, so the value being compared must match both the value and the type of the case.
+6. What keyword is used to define each condition in a switch statement?
+   case
+
+# Session [2026-7-12] [For Loops]:
+
+### Reference Data:
+
+### Lesson Review (For Loops):
+
+1. What are the three parts that must be defined inside the parentheses of a for loop in JavaScript?
+   The three parts are:
+
+1) The intialization of the variable to loop over (e.g., let i = 0)
+2) The condition that checks wheather to continue the loop (e.g., i < 5)
+3) The update statement that modifies the variable after each iteration (e.g., i++).
+
+2. What is the difference between the `break` and `continue` keywords when used inside a for loop?
+   `break` immediately exits the entire for loop and stops all further iterations. `continue` skips only the current iteration and moves on to the next iteration, continuing the loop execution.
+3. What is the syntax for a `for...of` loop in JavaScript, and what type of data structure does it iterate over?
+   const fruit = ['apple', 'banana', 'orange'];
+   The syntax is `for (const variable of array)`. For example: `for (const fruit of fruits)`. It iterates over arrays and provides direct access to each element's value, rather than its index.
+4. What is the difference between `i++` and `i += 2` when used in a for loop's update statement?
+   `i++` increments the variable by 1 each iteration (equivalent to i = i + 1), while `i += 2` increments the variable by 2 each iteration (equivalent to i = i + 2), allowing you to skip every other number.
+5. When using a `for...in` loop an object in JavaScript, what does the loop variable represent?
+
+const person = {
+name: 'John',
+age: 30,
+city: 'NYC'
+
+};
+for (const key in person) {
+
+console.log(key);
+
+}
+The loop variable represents the keys (property names) of the object, not the values. In this example, it would output the strings 'name', 'age', and 'city'. To access the values, you would use `person[key]`.
+
+6. What is the most common syntax for looping through an array using a standard for loop?
+   `for (let i = 0; i < array.lenght; i++) {//code}`
+7. What is an off-by-one error in the context of for loops?
+   When a loop accidentally runs one too many times or stops one iteration too early.
+
+# Session [2026-7-12] [While Loop]:
+
+### Reference Data:
+
+### Lesson Review (While Loop):
+
+1. What is the key difference between a for loop and a while loop in terms of when you should use each?
+   A for loop is best used when you know exactly how many times you need to iterate, while a while loop is best used when you don't know how many iterations will be needed. While loops run until a condition because false, making them ideal for scenarios like processing user input until a specific command is entered or traversing nested data structures of unknown depth.
+2. What ar the three main components of a while loop and where are they positioned compared to a for loop?
+   The three components are:
+
+1) initialization - placed before the while loop
+2) codition check - placed inside the parentheses of the while statement
+3) updater - placed at the end of the loop body. In a for loop, all three components are contained in the parentheses,m but in a while loop they are separated.
+
+3. Given the following while loop, what potential problem exists?
+
+let i = 0;
+
+while (i < 5) {
+console.log(i);
+}
+The code creates an infinite loop becase variable i is never updated using the loop body. Since i starts at 0 and is always less than 5, the condition will always be true and the loop will never terminate. To fix this, you need to increment i (e.g., i++) at the end of the loop body.
+
+4. What is the key difference between a while loop and a do-while loop?
+   A do-while loop always executes the code in the loop body at least once before checking the condition, because the condition check happens a the end of the loop. In contrast, a regular while loop checks the condition first before exeuting any code, so if the conditon is false intially, the loop body never executes.
+5. If you have the following code, what will be printed and why?
+
+let i = 10;
+
+do {
+
+console.log("In loop");
+
+i++;
+
+} while (i < 5);
+This code will print "In loop" exactly once. Even though the condition (i < 5) isi false from the start since i equals 10, the do-while loop executes the loop body first before checking the condition. After first iteration, the condition is checked and found to be false, so the loop terminates.
+
+6. Consider the following code:
+
+let i = 1-;
+
+while (i < 5) {
+
+console.log("In loop")
+
+i++;
+
+}
+It will print nothing because the condition is false from the start.
+
+# Session [2026-7-12] [Recursion]:
+
+### Reference Data:
+
+### Lesson Review (Recursion):
+
+1. What are the two main parts that every recursive function must have?
+   A recursive function must have a base case (a condition that stops the recursion) and a recursive part (where the function calls itself). The base case prevents infinite loops, while the recursive part performs the reapeated operation.
+2. What error will if a recursive funciton is missing its base case or never reaches it?
+   The code will throw a "rage error: maximum call stack size exceeded" or similar error. This happens because the function calls itself infinitely, which is the recursive equivalent of an inifinite loop.
+3. In this recursive countdown function, why does "after" get logged three times at the end?
+
+function countdown(number) {
+
+console.log(number);
+
+console.log("before");
+
+if (number <= 0)
+
+return;
+
+contdown(number- - 1);
+
+console.log("after:);
+
+}
+
+countdown(3);
+
+"after" gets logged three times because each recursive call creates a new function execution that must complete. When the base case is reached (0), the function returns and goes back through each nexted call, executing the remaining code ("after") for countdown(0), countdown(1), and countdown(2) in reverse order. 4. What type of data structures or problems are particularly well-suited for recursive soulutions?
+Recursion is particularly useful fo rtree-liek structures and nested data. Examples include file systems with folders containing subfolders, or nested arrays. These problems involve data where you need to traverse through multiple levels of nesting. 5. How can you check if a value is an array in JavaScript when working with potential nested arrays?
+You can use the `Array.isArray()` function, passing in the object you eant to check. It returns true if the value is an array, and false if it is not. This is useful in recursive functions that need to handle both arrays and individual values differently.
+
+# Session [2026-7-12] [Short Circuit Evaluation]:
+
+### Reference Data:
+
+### Lesson Review (Short Circuit Evaluation):
+
+1. 
+
 # Session [] []:
 
-## The "Why" (The Concept):
+## The "Why" ():
 
 - **Core Logic:**
 
@@ -617,23 +782,11 @@ greet() {
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
-
-# Session [] []:
-
-## The "Why" (The Concept):
-
-- **Core Logic:**
-
-- **Aha! Moment:**
-
-### Reference Data:
-
 ### Lesson Review ():
 
 # Session [] []:
 
-## The "Why" (The Concept):
+## The "Why" ():
 
 - **Core Logic:**
 
@@ -653,4 +806,16 @@ greet() {
 
 ### Reference Data:
 
-### Lesson Review (Hoisting):
+### Lesson Review ():
+
+# Session [] []:
+
+## The "Why" ():
+
+- **Core Logic:**
+
+- **Aha! Moment:**
+
+### Reference Data:
+
+### Lesson Review ():
