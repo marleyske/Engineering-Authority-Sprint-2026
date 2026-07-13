@@ -508,7 +508,7 @@ Arrays and objects.
 const date = new Date();
 The `new` keyword is required to create a new instance of a class. It calls the constructor function of the class, creates a new object, and returns that object with all properties and methods defined in the class. Without `new` the constructor function would not execute properly.
 
-6. In the follwing class definition, what is the purpose of the constructor function?
+6. In the following class definition, what is the purpose of the constructor function?
 
 class Person {
 
@@ -521,9 +521,9 @@ constructor(name, age) {
 }
 }
 
-It initializes properties when creating a new instance of the class.
+- It initializes properties when creating a new instance of the class.
 
-7. In the following code, what does `this.mame` reference inside the `geet` method?
+7. In the following code, what does `this.name` reference inside the `greet` method?
 
 class Person {
 
@@ -536,11 +536,13 @@ constructor(name, age) {
 }
 greet() {
 
-    console.log("Hello, my name is " + this.mame);
+      console.log("Hello, my name is " + this.mame);
 
 }
 
 }
+
+- The name property of the current Person instance.
 
 # Session [2026-7-11] [if Statements]:
 
@@ -555,10 +557,14 @@ if (age >= 18) {
 
 console.log("You can vote");
 
-} 2. How does an if-else statement work in JavaScript when the condion evaluates to false?
-When the condition in an if statement evaluates to false, the code inside the if block is skipped entirely, and the code inside the else block is executed instead. The else keyword is placed directly after the closing bracket of the if statemen, followed by curly brakets containing the alternative code to run. 3. Waht are the six falsy values in JavaScript that evaluate to false in conditional statements?
-The six falsy values in JavaScript are: 0 (zero), empty string (""), null, undefined, NaN (not a number), and false itself. All other values are considered truthy and will evaluate to true in a boolean context. 4. Waht are guard clauses and how do they help avoid nested if statements?
-Guard clauses are early returns from a function that check for invalid conditions first and exit immediately if they're met. Instead of nesting if statements, you check the opposite condition first and return early, allowing the rest of the code to execute without nesting. for example:
+}
+
+2. How does an if-else statement work in JavaScript when the condition evaluates to false?
+   When the condition in an if statement evaluates to false, the code inside the if block is skipped entirely, and the code inside the else block is executed instead. The else keyword is placed directly after the closing bracket of the if statement, followed by curly brakets containing the alternative code to run.
+3. Waht are the six falsy values in JavaScript that evaluate to false in conditional statements?
+   The six falsy values in JavaScript are: 0 (zero), empty string (""), null, undefined, NaN (not a number), and false itself. All other values are considered truthy and will evaluate to true in a boolean context.
+4. What are guard clauses and how do they help avoid nested if statements?
+   Guard clauses are early returns from a function that check for invalid conditions first and exit immediately if they're met. Instead of nesting if statements, you check the opposite condition first and return early, allowing the rest of the code to execute without nesting. for example:
 
 if (weather !== "sunny") {
 
@@ -568,9 +574,12 @@ return;
 
 }
 
-// Continue with code knowing weather is sunny 5. How does an else-if statement work in JavaScript, and what happens when the first condition is false?
-An else-if statement is created by writing 'else if' after an if statement's closing bracket, followed by parentheses with a new condition to check. When the first condition is false, JavaScript moves to check the else-if condition. If that's true, it runs that block's code and skips to the end. If it's also false, if continues to the next else-if or else statement. Only one block of code will ever run in an if-else-if chain. 6. What is the difference between using `&&` (AND) and `||A` (OR) operators in an if satatement condition?
-AND requires all conditions to be true, OR requires at least one condition to be true.
+// Continue with code knowing weather is sunny
+
+5. How does an else-if statement work in JavaScript, and what happens when the first condition is false?
+   An else-if statement is created by writing 'else if' after an if statement's closing bracket, followed by parentheses with a new condition to check. When the first condition is false, JavaScript moves to check the else-if condition. If that's true, it runs that block's code and skips to the end. If it's also false, if continues to the next else-if or else statement. Only one block of code will ever run in an if-else-if chain.
+6. What is the difference between using `&&` (AND) and `||A` (OR) operators in an if satatement condition?
+   AND requires all conditions to be true, OR requires at least one condition to be true.
 
 # Session [2026-7-11] [Ternary Operator]:
 
@@ -628,6 +637,27 @@ weather = "not hot";
 
 # Session [2026-7-12] [For Loops]:
 
+## Aha Momemnt:
+
+- In my Lab I used the condition `if (systemNodes[i] >= "Camera")` (Which was incorrect).
+- In JavaScript, when you compare strings using `>=` or `<=`, the engine compares them alphabetically based on their Unicode values.
+
+1. "Battery" vs "Camera": "B" comes before "C".
+2. "Camera" vs "Camera": They are equal.
+3. "LIDAR" vs "Camera": "L" comes after "C".
+
+- Because of how this works, my current logic will trigger the [WARNING] for Camera, LIDAR, and Memeory (since they all come after "B" or are "C" or later). That's not what I wantfor a system health check!
+
+**Correction:**
+Why this is better for a System Admin:
+
+- `===` (Strict Equality): As a engineer, I want to be precise. I don't want to accidentally trigger an alert because a node name happens to come after "Camera" in the alphabet. You want to trigger it because the specific node i'm checking has a problem.
+- The Break: I used `break` perfectly. Once I hit the "Battery" fault, there is no need to keep checking the rest of the system; I've found the critical issue.
+
+**Logic Challenge:**
+
+- If I wanted to keep checking the rest of the system even if the Battery was low, I could replace `break` with `continue`. The loop would skip the "Battery" status log, jump back to the top, amd continue checking the other nodes. Ina a real robot, I might want that-to see if the LIDAR is also failing, even if the battery is dying.
+
 ### Reference Data:
 
 ### Lesson Review (For Loops):
@@ -674,24 +704,26 @@ The loop variable represents the keys (property names) of the object, not the va
 
 1. What is the key difference between a for loop and a while loop in terms of when you should use each?
    A for loop is best used when you know exactly how many times you need to iterate, while a while loop is best used when you don't know how many iterations will be needed. While loops run until a condition because false, making them ideal for scenarios like processing user input until a specific command is entered or traversing nested data structures of unknown depth.
-2. What ar the three main components of a while loop and where are they positioned compared to a for loop?
-   The three components are:
+2. What are the three main components of a while loop and where are they positioned compared to a for loop?
 
-1) initialization - placed before the while loop
-2) codition check - placed inside the parentheses of the while statement
-3) updater - placed at the end of the loop body. In a for loop, all three components are contained in the parentheses,m but in a while loop they are separated.
+The three components are:
 
-3. Given the following while loop, what potential problem exists?
+1. initialization - placed before the while loop
+2. codition check - placed inside the parentheses of the while statement
+3. updater - placed at the end of the loop body. In a for loop, all three components are contained in the parentheses, but in a while loop they are separated.
+
+3) Given the following while loop, what potential problem exists?
 
 let i = 0;
 
 while (i < 5) {
 console.log(i);
 }
+
 The code creates an infinite loop becase variable i is never updated using the loop body. Since i starts at 0 and is always less than 5, the condition will always be true and the loop will never terminate. To fix this, you need to increment i (e.g., i++) at the end of the loop body.
 
 4. What is the key difference between a while loop and a do-while loop?
-   A do-while loop always executes the code in the loop body at least once before checking the condition, because the condition check happens a the end of the loop. In contrast, a regular while loop checks the condition first before exeuting any code, so if the conditon is false intially, the loop body never executes.
+   A do-while loop always executes the code in the loop body at least once before checking the condition, because the condition check happens at the end of the loop. In contrast, a regular while loop checks the condition first before executing any code, so if the conditon is false intially, the loop body never executes.
 5. If you have the following code, what will be printed and why?
 
 let i = 10;
@@ -703,11 +735,12 @@ console.log("In loop");
 i++;
 
 } while (i < 5);
-This code will print "In loop" exactly once. Even though the condition (i < 5) isi false from the start since i equals 10, the do-while loop executes the loop body first before checking the condition. After first iteration, the condition is checked and found to be false, so the loop terminates.
+
+This code will print "In loop" exactly once. Even though the condition (i < 5) is false from the start since i equals 10, the do-while loop executes the loop body first before checking the condition. After first iteration, the condition is checked and found to be false, so the loop terminates.
 
 6. Consider the following code:
 
-let i = 1-;
+let i = 10;
 
 while (i < 5) {
 
@@ -719,6 +752,27 @@ i++;
 It will print nothing because the condition is false from the start.
 
 # Session [2026-7-12] [Recursion]:
+
+## Aha! Moment: [Recursion Lab]
+
+- The Base Case `(if (n < 0) ): I created a safety net. Even if someone passes -5 into my funciton, my code handles it gracefully and returns immediately.
+- The recursive step (`countdown(n - 1) ): I correctly identified that to "shrink" the problem, I need to call the function again witha small value.
+- The Execution Order: I printed `n` before the recursive call, which is exactly how a countdwon should look.
+
+## The Architect's View:
+
+- I I ran this code, the "stack" (the memory the computer uses to keep track of these calls) would look like this:
+
+* `countdown(1)` called.
+  - Prints `1`.
+  - `countdown(0)` called.
+    - Prints `0`.
+    - `countdown(-1)` called.
+      - `-1` is less than `0`, so it hits my return and stops.
+
+- If I wanted "Blastoff!" message, I would place `console.log("Blastoff!")` inside the base case.
+  - The return: By placing `return` right after the "Blastoff!" print, I ensure the recursion ends immediately.
+  - The Logic flow: Now, the function handles the entire countdown life cycle from start to finish.
 
 ### Reference Data:
 
@@ -758,7 +812,24 @@ You can use the `Array.isArray()` function, passing in the object you eant to ch
 
 ### Lesson Review (Short Circuit Evaluation):
 
-1. 
+1. What is short circuit evaluation in JavaScript and how does it work with the AND operator when the first operand is false?
+Short circuit evaluation is when JavaScript stops evaluating a logincal expression once it knows the final result. Wih the AND operator, if the first perand is false, JavaScript skips evaluating the second perand etirely because false AND anything will always be false. It returns false immediately without checking what comes after.
+2. How does short circit evaluation work with the OR operator when the first operand is true?
+When using the OR operator, if the first operand is true, JavaScript skips evaluating the second operand because true OR anything will always be true. JavaScript returns true immediately without executing or checking the second value.
+3. What value is returned when short circuit evaluation occurs in logical operations? For exmple, what does `true && 'hello'` return?
+Shor circuit evaluation reurns the value at the point where JavaScript stops checking. For `true && 'hello'`, it returns 'hello' because JavaScript needs to check the second value (since true AND something could be true or false), so it returns that second value. For `false && 'hello'`, it would return false because JavaScript stops at the first operand.
+4. What is the nullish coalescing operator (??) and how does it differ from the OR operator (||) when providing default values?
+The nullish coalescing operator (??) only check for null or undefined values, not all falsy values. Ulike the OR operator which treats all falsy values (0, empty string, false, null, undefined) as triggers for the fallback, `??` only uses the fallback value when the first operand is specifically null or undefined. For example, `0 ?? 5000` returns 0, while `0 || 500` returns 5000.
+5. What is optional chaining in JavaScript and how does it simplify accessing nested object properties? Provide an example.
+Optional chaining uses `?.` syntax fo safely access deeply nested properties without having to manually check if each level exists. For example, `user?.profile?.settings?.theme` will return the theme value if all properties exist, or undefined if any property in the chain doesn't exist. This is much simpler than writing `user && user.profile && user.profile.settings && user.profile.settings.theme`. It can also be used with methods like `user.notify?.()` to check if a method exists before calling it.
+6. Given the code 
+
+const timeout = 0; 
+const timeout1 = timeout ?? 5000;
+
+What will be the value of timeout?
+
+- 0, because nullish coalescing only checks for null or undefined.
 
 # Session [] []:
 

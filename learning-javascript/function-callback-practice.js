@@ -199,7 +199,7 @@ console.log(getSeason(7));
 console.log(getSeason(16));
 
 /*
-Exercise
+For Loop Exercise
 Write a for loop that:
 
 Creates an array of the first 10 even numbers (2, 4, 6, 8, ...)
@@ -248,3 +248,70 @@ function findMax(arr) {
 
 const data = [1, [2, 3], 4, [5, 6], 7];
 console.log(findMax(data)); // 7
+
+// FOR LOOP LABS
+
+/*
+The Scenario
+Imagine you are building a monitoring script for a robotic platform. 
+You have an array of "System Nodes" (sensors, CPU, memory, etc.), and you need to check them one by one.
+
+The Architect’s Breakdown
+let i = 0: This is your initialization. We start at the first item in the list (index 0).
+
+i < systemNodes.length: This is your safety condition. It ensures the loop stops before it tries to access a part of the system that doesn't exist.
+
+i++: This is your increment. It moves your "pointer" to the next node in the array.
+
+Practice Challenge for You
+To level up, let’s add an "If Statement" inside that loop to handle a "Faulty" node.
+
+Task:
+Modify the code so that if the loop hits "Battery", it prints [WARNING]: Battery Low! instead of [OK].
+
+Hint: You will need an if statement inside the loop that checks if systemNodes[i] === "Battery".
+
+Try to write that code snippet and paste it here! Don't worry about syntax errors; just focus on the logic flow.
+*/
+
+const systemNodes = ["CPU", "Memory", "LIDAR", "Camera", "Battery"];
+
+for (let i = 0; i < systemNodes.length; i++) {
+  if (systemNodes[i] === "Battery") {
+    console.log("[WARNING]: Battery Low!");
+    break;
+  }
+  // Logic: Check if the current node is operational
+  console.log(`Checking system node: ${systemNodes[i]}`);
+
+  // Here, you would normally call a function to ping the hardware
+  // For now, we simulate success
+  console.log(`Status: [OK]`);
+}
+
+// RECURSION LAB:
+
+/*
+Write a recursive function called countdown(n) that prints the number n, then calls itself with n - 1, 
+until it hits 0 (at which point it prints "Blastoff!" and stops).
+
+Here is the goal: 
+1.  Base Case: If n is 0, print "Blastoff!" and return (stop the function).
+2.  Recursive Step: Print n, then call countdown(n - 1)
+*/
+
+function countdown(n) {
+  // 1. Base Case: The "stop" condition
+  if (n < 0) {
+    console.log("Blastoff!");
+    return; // Stop the function here
+  }
+
+  // 2. The process
+  console.log(n);
+
+  // The recursive step
+  countdown(n - 1);
+}
+
+countdown(1);

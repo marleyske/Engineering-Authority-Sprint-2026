@@ -928,15 +928,15 @@ Reflection:
 ### Lesson Review (Writing Scripts):
 
 1. What does the `-p` flag do when used with the `mkdir` command?
-The `-p` flag prevents `mkdir` from throwing an error if the directory already exists. Without this flag, `mkdir` would error out when trying to create a directory that already exists, which could cause a script to fail.
+   The `-p` flag prevents `mkdir` from throwing an error if the directory already exists. Without this flag, `mkdir` would error out when trying to create a directory that already exists, which could cause a script to fail.
 2. What is the difference between running a bash script with `source script.sh` versus `bash script.sh`?
-`source` runs the script in the current process, so changes like `cd` commands will affect the current shell session. `bash script.sh` creates a subprocess to run the script, so changes like directory changes only last for the duration of that subporcess and don't affect the parent shell.
+   `source` runs the script in the current process, so changes like `cd` commands will affect the current shell session. `bash script.sh` creates a subprocess to run the script, so changes like directory changes only last for the duration of that subporcess and don't affect the parent shell.
 3. What bash command creates a series of numbered files, such as file1.txt thorugh file100.txt?
-You can use brace expansion with `touch: touch file{1..100}.txt`. This will create files named file1.txt, file2.txt, through file100.txt.
+   You can use brace expansion with `touch: touch file{1..100}.txt`. This will create files named file1.txt, file2.txt, through file100.txt.
 4. When you use `cd` inside a bash script, does the directory change persist after the script finishes executing?
-No, when you run a script with `bash script.sh`, the directory change only lasts for the duration of the script execution because it runs in a subprocess. However, if you run the script in `source`, the directory change will persist in the current shell.
+   No, when you run a script with `bash script.sh`, the directory change only lasts for the duration of the script execution because it runs in a subprocess. However, if you run the script in `source`, the directory change will persist in the current shell.
 5. What are two equivalent ways to execute a bash script in the current shell process?
-You can use either `source script.sh` or `. script.sh` (dot notation). Both execute the script in the current shell process rather than creating a subprocess. The dot notation works in more Linux distributions than `source`. 
+   You can use either `source script.sh` or `. script.sh` (dot notation). Both execute the script in the current shell process rather than creating a subprocess. The dot notation works in more Linux distributions than `source`.
 
 Reflection:
 
@@ -953,19 +953,19 @@ Reflection:
 ### Lesson Review (Hashbang):
 
 1. What is the syntax for a sheband (or hasbang) at the beginnign of a bash script?
-A shebang begins witha a hash and a exclamation point (#!) followed by the path to the interpreter. For bashscripts, it's written as `#!/bin/bash` at the very top line of the file. There can optionally be a space after the shebang.
+   A shebang begins witha a hash and a exclamation point (#!) followed by the path to the interpreter. For bashscripts, it's written as `#!/bin/bash` at the very top line of the file. There can optionally be a space after the shebang.
 2. What is the purpose of a shebang in a script file?
-The shebang tells bash which iterpreter should be used to execute the file. For example, `#!bin/bash` indicates the file should be interpreted as a bash script, while `#!/user/bin/python` would indicate a Python file. This allows bash to determin how to run the file even if it has no file extension.
+   The shebang tells bash which iterpreter should be used to execute the file. For example, `#!bin/bash` indicates the file should be interpreted as a bash script, while `#!/user/bin/python` would indicate a Python file. This allows bash to determin how to run the file even if it has no file extension.
 3. What command is used to make a file executable in bash?
-The `chmod +x filename` command is used to add execute permissions to a file, making it directly invocable.
+   The `chmod +x filename` command is used to add execute permissions to a file, making it directly invocable.
 4. How can you execute a script file that has a shebang and execute permissions without explicitly calling the interpreter?
-You can run it directly using `./filename`. The shebang at the top of the file tells the system which interpreter to use, so you don't need to prefix it with `bash` or `python` or any other interpreter command.
+   You can run it directly using `./filename`. The shebang at the top of the file tells the system which interpreter to use, so you don't need to prefix it with `bash` or `python` or any other interpreter command.
 5. What command can you use to find the full path to an interpreter like node?
-The `which` command can be used to find the full path to an interpreter. For example, `which node` will return the full path to the node executable.
+   The `which` command can be used to find the full path to an interpreter. For example, `which node` will return the full path to the node executable.
 6. Why is using a shebang beneficial when sharing scripts between users with different shells?
-It ensures the script runs with the intended interpreter regardless of the user's default shell.
+   It ensures the script runs with the intended interpreter regardless of the user's default shell.
 7. Which of the following is a valid shebang for a Node.js script?
-`#!/bin/bash/node` or `#!/snap/bin/node`
+   `#!/bin/bash/node` or `#!/snap/bin/node`
 
 Reflection:
 
@@ -982,21 +982,37 @@ Reflection:
 ### Lesson Review (Path & Variables):
 
 1. What does the PATH environment variable contain and how does Bash use it?
-The PATH environment variable contains a colon-separated list of directory paths where executable programs are stored. Bash searches these directories from left to right to find and execute commands that are typed in the terminal.
+   The PATH environment variable contains a colon-separated list of directory paths where executable programs are stored. Bash searches these directories from left to right to find and execute commands that are typed in the terminal.
 2. What does the `./` prefix mean when running a file in Bash?
-The `./` prefix tells Bash to run a file from the current directory rather than searching for it in the PATH directories. The dot represents the current directories. The dot represents the current directory and the slash is the path separator.
+   The `./` prefix tells Bash to run a file from the current directory rather than searching for it in the PATH directories. The dot represents the current directories. The dot represents the current directory and the slash is the path separator.
 3. How do you add a new directory to the beginning of the PATH variable without overwriting existing PATH entries?`export PATH=/home/user/my_bin:$PATH`
-Use the syntax `export PATH=/new/directory:$PATH`. The colon separates path entries, and `$PATH` appends the existing PATH contents. Without `:$PATH`, you would overwrite the entire PATH variable instead of adding to it.
+   Use the syntax `export PATH=/new/directory:$PATH`. The colon separates path entries, and `$PATH` appends the existing PATH contents. Without `:$PATH`, you would overwrite the entire PATH variable instead of adding to it.
 4. How do you add comments in a Bash script?
-Use the hash symbol `#` to add comments. Everything after the `#` on a lin is treated as a comment and not executed. Comments can be on their own line or at the end of a command line.
-5. How do you define and use variables in a Bash script? 
-DESTINATION=/tmp/text
-echo $DESTINATION
+   Use the hash symbol `#` to add comments. Everything after the `#` on a lin is treated as a comment and not executed. Comments can be on their own line or at the end of a command line.
+5. How do you define and use variables in a Bash script?
+   DESTINATION=/tmp/text
+   echo $DESTINATION
 Define variables using the sytax `VARIABLE_NAME=value` (no spaces around the equals sign). Access variables using `$VARIABLE_NAME`. Quotes around the value are optional if there are no spaces.
 6. what does the `$PATH` environment variable contain?
-Locations where programs are found.
+   Locations where programs are found.
 7. When searching through directories in the PATH, in what order does Bash look for programs?
-Left to right
+   Left to right
+
+Reflection:
+
+## [2026-7-12] Session Arguments:
+
+**Topics:**
+
+**Key Takeaways:**
+
+-
+
+### Reference Data:
+
+### Lesson Review (Arguments):
+
+1.
 
 Reflection:
 
@@ -1008,11 +1024,67 @@ Reflection:
 
 -
 
-### Reference Data:
+### Refrence Data:
 
-### Lesson Review
+Reflection:
 
-1.
+## [] Session
+
+**Topics:**
+
+**Key Takeaways:**
+
+-
+
+### Refrence Data:
+
+Reflection:
+
+## [] Session
+
+**Topics:**
+
+**Key Takeaways:**
+
+-
+
+### Refrence Data:
+
+Reflection:
+
+## [] Session
+
+**Topics:**
+
+**Key Takeaways:**
+
+-
+
+### Refrence Data:
+
+Reflection:
+
+## [] Session
+
+**Topics:**
+
+**Key Takeaways:**
+
+-
+
+### Refrence Data:
+
+Reflection:
+
+## [] Session
+
+**Topics:**
+
+**Key Takeaways:**
+
+-
+
+### Refrence Data:
 
 Reflection:
 
@@ -1739,6 +1811,40 @@ Ubuntu Server system for Raspberry Pi
 - this stops the system from treating it as a dependency for the meta-package. Sometimes, just changing the "install type" prevents the system from wanting to rip it out.
 - Step C: The Force (Use with extreme Caution); Don't use fo now it's very risky!
 - `dpkg --force-all` command is the "nuclear option"-it will break my package database and make future updates a nightmare.
+
+## Recommended "Integration Lab" Scope:
+
+Keep it small so you don't burn out before your next course.
+
+**Goal:** Build a "System Monitor" script.
+
+**The Task:** Use a Shell Script to check if a specific process (like a web server or a dummy file) is running.
+
+Use a For Loop to iterate through a list of system metrics (e.g., memory usage, disk space).
+
+Output the results into a .log file.
+
+The Challenge: Try to trigger a warning if a specific "node" (like disk space) is over a certain percentage.
+
+This will force you to use Shell logic, CLI file management, and conditional loops in a single, cohesive workflow. It’s the perfect "graduation" from the intro modules.
+
+- A Note on your LEARNING*JOURNAL.md
+  As you build this lab, don't just write down what worked. Write down what made you pause. * Did you have to look up the syntax for if statements in Bash? \_ Did you have to look up how to append to a log file? That friction is the "missing data" that the Fullstack course will eventually fill in. You are essentially building a "Questions Map"—when you get to the relevant module in the Fullstack path, you'll know exactly which part of the lecture to pay 10x more attention to
+
+### The Engineering Workflow:
+
+When you sit down to build that System Monitor:
+
+1. Map the Flow First: Before touching the terminal, sketch the flow on your LEARNING_JOURNAL.md.
+   - Step A: Get the metric (e.g., CPU load).
+
+   - Step B: Perform the comparison (Is it > 80%?).
+
+   - Step C: Logic branch (If yes, log alert; if no, print "Status OK").
+
+2. Modularize: Write your "check" logic as a separate script or function, then call it from your main loop. This will get you used to the way real backend services are structured.
+
+3. The "Safety" Check: Since you're learning Shell, get into the habit of using set -e at the top of your scripts. It tells the script to exit immediately if any command fails—it’s a simple, high-level way to ensure your "data flow" doesn't continue with bad information.
 
 ### Architect's Decision Log:
 
