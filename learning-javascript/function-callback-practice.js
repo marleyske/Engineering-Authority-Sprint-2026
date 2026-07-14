@@ -195,8 +195,8 @@ function getSeason(month) {
       return "Invalid month";
   }
 }
-console.log(getSeason(7));
-console.log(getSeason(16));
+console.log(getSeason(8));
+console.log(getSeason(14));
 
 /*
 For Loop Exercise
@@ -220,8 +220,8 @@ for (let i = 0; i < evenNumbers.length; i++) {
   sum += evenNumbers[i];
 }
 
-console.log("Even numbers:", evenNumbers);
-console.log("Sum:", sum);
+console.log("Even numbers:", evenNumbers); // 2, 4, 6, 8, 10, 12, 14, 16, 18, 20
+console.log("Sum:", sum); // 110
 
 /*
 Exercise
@@ -263,7 +263,7 @@ i < systemNodes.length: This is your safety condition. It ensures the loop stops
 
 i++: This is your increment. It moves your "pointer" to the next node in the array.
 
-Practice Challenge for You
+Practice Challenge for You:
 To level up, let’s add an "If Statement" inside that loop to handle a "Faulty" node.
 
 Task:
@@ -284,7 +284,7 @@ for (let i = 0; i < systemNodes.length; i++) {
   // Logic: Check if the current node is operational
   console.log(`Checking system node: ${systemNodes[i]}`);
 
-  // Here, you would normally call a function to ping the hardware
+  // Here, I would normally call a function to ping the hardware
   // For now, we simulate success
   console.log(`Status: [OK]`);
 }
@@ -315,3 +315,34 @@ function countdown(n) {
 }
 
 countdown(1);
+
+/*
+Exercise
+Given this HTML, write JavaScript to:
+
+Change the header text to "Welcome!"
+Make all paragraphs blue
+Hide the last paragraph
+Add a border to inputs with the "required" class
+
+
+
+// 1. Change header text
+document.querySelector("#main-header").textContent = "Welcome!";
+
+// 2. Make all paragraphs blue
+document.querySelectorAll("p").forEach((p) => {
+  p.style.color = "blue";
+});
+
+// 3. Hide the last paragraph
+const lastParagraph = document.querySelector("p:last-child");
+lastParagraph.style.display = "none";
+
+// 4. Add border to required inputs
+document.querySelectorAll("input.required").forEach((input) => {
+  input.style.border = "2px solid red";
+});
+*/
+
+

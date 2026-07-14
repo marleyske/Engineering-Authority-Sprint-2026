@@ -588,9 +588,9 @@ return;
 ### Lesson Review (Ternary Operator):
 
 1. What are three components that make up a tenary operator in JavaScript?
-   A tenray operator consists of:
+   A tenary operator consists of:
 
-1) A condition/check that evalueates to true or false
+1) A condition/check that evaluates to true or false
 2) A question mark (?) symbol
 3) A colon (:) symbol
    The syntax is: `condition ? valueIfTrue : valueIfFalse`
@@ -813,25 +813,25 @@ You can use the `Array.isArray()` function, passing in the object you eant to ch
 ### Lesson Review (Short Circuit Evaluation):
 
 1. What is short circuit evaluation in JavaScript and how does it work with the AND operator when the first operand is false?
-Short circuit evaluation is when JavaScript stops evaluating a logincal expression once it knows the final result. Wih the AND operator, if the first perand is false, JavaScript skips evaluating the second perand etirely because false AND anything will always be false. It returns false immediately without checking what comes after.
+   Short circuit evaluation is when JavaScript stops evaluating a logincal expression once it knows the final result. Wih the AND operator, if the first perand is false, JavaScript skips evaluating the second perand etirely because false AND anything will always be false. It returns false immediately without checking what comes after.
 2. How does short circit evaluation work with the OR operator when the first operand is true?
-When using the OR operator, if the first operand is true, JavaScript skips evaluating the second operand because true OR anything will always be true. JavaScript returns true immediately without executing or checking the second value.
+   When using the OR operator, if the first operand is true, JavaScript skips evaluating the second operand because true OR anything will always be true. JavaScript returns true immediately without executing or checking the second value.
 3. What value is returned when short circuit evaluation occurs in logical operations? For exmple, what does `true && 'hello'` return?
-Shor circuit evaluation reurns the value at the point where JavaScript stops checking. For `true && 'hello'`, it returns 'hello' because JavaScript needs to check the second value (since true AND something could be true or false), so it returns that second value. For `false && 'hello'`, it would return false because JavaScript stops at the first operand.
+   Shor circuit evaluation reurns the value at the point where JavaScript stops checking. For `true && 'hello'`, it returns 'hello' because JavaScript needs to check the second value (since true AND something could be true or false), so it returns that second value. For `false && 'hello'`, it would return false because JavaScript stops at the first operand.
 4. What is the nullish coalescing operator (??) and how does it differ from the OR operator (||) when providing default values?
-The nullish coalescing operator (??) only check for null or undefined values, not all falsy values. Ulike the OR operator which treats all falsy values (0, empty string, false, null, undefined) as triggers for the fallback, `??` only uses the fallback value when the first operand is specifically null or undefined. For example, `0 ?? 5000` returns 0, while `0 || 500` returns 5000.
+   The nullish coalescing operator (??) only check for null or undefined values, not all falsy values. Ulike the OR operator which treats all falsy values (0, empty string, false, null, undefined) as triggers for the fallback, `??` only uses the fallback value when the first operand is specifically null or undefined. For example, `0 ?? 5000` returns 0, while `0 || 500` returns 5000.
 5. What is optional chaining in JavaScript and how does it simplify accessing nested object properties? Provide an example.
-Optional chaining uses `?.` syntax fo safely access deeply nested properties without having to manually check if each level exists. For example, `user?.profile?.settings?.theme` will return the theme value if all properties exist, or undefined if any property in the chain doesn't exist. This is much simpler than writing `user && user.profile && user.profile.settings && user.profile.settings.theme`. It can also be used with methods like `user.notify?.()` to check if a method exists before calling it.
-6. Given the code 
+   Optional chaining uses `?.` syntax fo safely access deeply nested properties without having to manually check if each level exists. For example, `user?.profile?.settings?.theme` will return the theme value if all properties exist, or undefined if any property in the chain doesn't exist. This is much simpler than writing `user && user.profile && user.profile.settings && user.profile.settings.theme`. It can also be used with methods like `user.notify?.()` to check if a method exists before calling it.
+6. Given the code
 
-const timeout = 0; 
+const timeout = 0;
 const timeout1 = timeout ?? 5000;
 
 What will be the value of timeout?
 
 - 0, because nullish coalescing only checks for null or undefined.
 
-# Session [] []:
+# Session [2026-7-14] [Array Methods]:
 
 ## The "Why" ():
 
@@ -841,9 +841,28 @@ What will be the value of timeout?
 
 ### Reference Data:
 
-### Lesson Review ():
+### Lesson Review (Array methods):
 
-# Session [] []:
+1. What is the purpose of the `forEach` method in JavaScript arrays and what parameters does the callback function receive?
+   `forEach` is an array method that loops through each value in an array and executes a callback function for each element. The callback function receives two parameters: the first is the individual value for the array, and the second (optional) parameter is the index of that value in the array.
+2. What is the differnce between the `map` method and the `forEach` method in JavaScript?
+   While both methods loop through every item in an array, `map` transforms each value in the array to a new value by returning something from the callback function, creating a brand new array. The `map` method always returns a new array of the same length as the original without modifying the original array. `forEach` simply executes a function for each element without creating a new array.
+3. How does the `filter` array method work in JavaScript?
+   The `filter` method creates a brand new array containing only values that match certain criteria. It loops through each value in the array and expects the callback function to return either true or false. If the callback returns true, that value will be included in the new array. If it returns false, the value will be excluded. The original array is not modified.
+4. What is the difference between the `some` and `every` array methods in JavaScript?
+   `some` checks if at least one element in an array passes a specific test - it returns true if the callback returns true for any element. `every` checks if all elements in an array pass a specific test - it returns true only if the callback returns true for every single element. If any element fails the test in `every`, the entire function returns false.
+5. How does the `reduce` method work in JavaScript, including the purpose of the accumulator parameter?
+
+const numbers = [1, 2, 3, 4, 5];
+
+const sum = numbers.reduce((accumulator, number) => {
+
+return accumulator + number;
+}, 0);
+
+The `reduce` method builds up a single value by iterating through an array. It takes a callback function with two main parameters: the accumulator (the value being built up) and the current element. It also takes a second argument after the callback which sets the intial value of the accumulator. Whatever is returned form the callback becomes the new accumulator value for the next iteration. In this example, starting with 0, it adds each number cumulatively, resulting in 15 (0+1_2_3_4_5).
+
+# Session [2026-7-14] [Window and Document]:
 
 ## The "Why" ():
 
@@ -853,9 +872,23 @@ What will be the value of timeout?
 
 ### Reference Data:
 
-### Lesson Review ():
+### Lesson Review (Window and Document):
 
-# Session [] []:
+1. What does the DOM stand for?
+   DOM stands for Document Object Model.
+2. What are the two fundamental objects avaiable inside the brwoser?
+   The two fundamental objects are the window object and the document object.
+3. Why can `console.log()` and `window.console.log()` be used interchangeably?
+   They can be used interchangeably because every global thing accessed in JavaScript is actually just on the window object. `console.log` is the same as `window.console.log`.
+4. What does the document object contain when you console.log it?
+   The document object contains the full HTML for the entire page.
+5. What are four commonly accessed properties of the document object?
+   Four commonly accessed properties are:
+   `document.documentElement` (gives the full HTML element), `document.body` (gives the portion inside the body), `document.head` (gives the portion in the head), and `document.URL` (gives the current URL).
+6. True statement about the window object:
+   All global variables and functions are properties of the window object.
+
+# Session [2026-7-14] [Selecting Elements]:
 
 ## The "Why" ():
 
@@ -865,7 +898,24 @@ What will be the value of timeout?
 
 ### Reference Data:
 
-### Lesson Review ():
+### Lesson Review (Selecting Elements):
+
+1. What is the difference between `querySelector()` and `querySelectorAll()` in terms of what they return?
+   `querySelector()` returns the first HTML element that matches the CSS selector, or null if no match is found. `querySelectAll()` returns a NodeList containing elements that match the CSS Selector.
+2. What is the key difference between a live HTML collection (retruned by `getElementByClassName()`) and a static NodeList (returned by `querySelectorAll()`)?
+   A live HTML collection automatically updates when elements matching the slector are added or removed from the page. A static NodeList does not update automatically = it remains unchanged even if new matching elements are added to the DOM after query is executed.
+3. When using `getElementById()` to select an element, should you include the pound symbol (#) prefix that is used in CSS?
+   No, you should not include the pound symbol. You should pass only the actual ID name itself as a string. For example, use `getElementById`('myId') not `getElementById('#myId')`.
+4. What methods are avaiable on a NodeList that are not available on an HTML collection?
+   NodeLists have the `forEach()` method avaiable, while HTMLL collections do not. Both lack most other array methods like `map()` and `reduece()`. To use these methods, you need to convert them to arrays using `Array.form()`.
+5. How would you change the text color of an element to blue and update its text content using JavaScript? Provide an example using an element stored ina variable called `element`.
+   You can use the `style` property to change the color and the `textContent` property to update the text:
+
+element.style = 'blue';
+
+element.textContent = 'New text here'; 6. Waht does `getElementById` method return if the specified ID does not exist in the document?
+null 7. When using `querySelector` with a class selector, what prefix should be used?
+A dot (.) prefix
 
 # Session [] []:
 
